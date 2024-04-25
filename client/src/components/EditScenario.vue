@@ -1,17 +1,20 @@
 <template>
-  <div class="hello">
-    <Header></Header>
-    <h1>{{ msg }}</h1>
+  <div id="root">
+    <Header id="header"></Header>
+    <!-- <h1>{{ msg }}</h1> -->
+    <EditingWorkspace id="content"></EditingWorkspace>
   </div>
 </template>
 
 <script>
 import Header from './Header.vue'
+import EditingWorkspace from './EditingWorkspace.vue'
 
 export default {
   name: 'EditScenario',
   components: {
-    Header
+    Header,
+    EditingWorkspace
   },
   data () {
     return {
@@ -23,6 +26,18 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+#root {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+#header {
+  flex: 0 1 auto;
+}
+#content {
+  flex: 1 1 auto;
+}
+
 h1, h2 {
   font-weight: normal;
 }
