@@ -3,8 +3,11 @@ import express from 'express'
 import morgan from 'morgan'
 
 const app = express()
+const PORT = process.env.port || 8081
 app.use(morgan('combined'))
-app.use(express.bodyParser.json())
+app.use(express.json())
 // app.use(cors()) // lets access from any domain
 
-// app.listen(process.env.port || 8081)
+app.listen(PORT, () => {
+    console.log(`Example app listening on port ${PORT}`)
+})
