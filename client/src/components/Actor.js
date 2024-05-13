@@ -1,7 +1,11 @@
 import { fabric } from 'fabric'
+import SceneObject from './SceneObject.js'
+import Vector from './Vector.js'
 
-export default class Actor {
+export default class Actor extends SceneObject {
   constructor (spriteId, borderInset) {
+    super()
+
     const scale = 0.25
 
     this.fabricObject = new fabric.Image(
@@ -15,7 +19,9 @@ export default class Actor {
         borderColor: 'red',
         cornerColor: 'green',
         cornerSize: 6,
-        transparentCorners: false
+        transparentCorners: false,
+        originX: 'center',
+        originY: 'center'
       }
     )
 
@@ -30,12 +36,7 @@ export default class Actor {
       br: false
     })
 
-    this.setX(0)
-    this.setY(0)
-  }
-
-  addToScene (scene) {
-    scene.add(this.fabricObject)
+    this.setPos(new Vector(0, 0))
   }
 
   lockMovementX (status) {
@@ -47,11 +48,11 @@ export default class Actor {
   }
 
   setAngle (angle) {
-    this.fabricObject.angle = angle
+    this.fabricObject.angle = angle * 180 / Math.PI
   }
 
   getAngle () {
-    return this.fabricObject.angle
+    return this.fabricObject.angle * Math.PI / 180
   }
 
   setX (x) {
@@ -62,6 +63,11 @@ export default class Actor {
     this.fabricObject.top = y
   }
 
+  setPos (pos) {
+    this.setX(pos.getX())
+    this.setY(pos.getY())
+  }
+
   getX () {
     return this.fabricObject.left
   }
@@ -70,19 +76,18 @@ export default class Actor {
     return this.fabricObject.top
   }
 
+  getPos () {
+    return new Vector(
+      this.getX(),
+      this.getY()
+    )
+  }
+
   getWidth () {
-    return this.fabricObject.width * this.fabricObject.scaleX
+    return this.fabricObject.width * this.fabricObject.scaleX + 2 * this.fabricObject.padding
   }
 
   getHeight () {
-    return this.fabricObject.height * this.fabricObject.scaleY
-  }
-
-  getCenterX () {
-    return this.fabricObject.left + this.getWidth() / 2
-  }
-
-  getCenterY () {
-    return this.fabricObject.top + this.getHeight() / 2
+    return this.fabricObject.height * this.fabricObject.scaleY + 2 * this.fabricObject.padding
   }
 }

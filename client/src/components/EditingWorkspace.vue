@@ -8,80 +8,80 @@
 </template>
 
 <script>
-import { fabric } from 'fabric'
-import Actor from './Actor.js'
+// import { fabric } from 'fabric'
+import Scene from './Scene.js'
+import Body from './Body.js'
+import Mirror from './Mirror.js'
 import LaserPointer from './LaserPointer.js'
+import Vector from './Vector.js'
 
 export default {
   name: 'EditingWorkspace',
 
   mounted () {
-    const canvas = new fabric.Canvas('editing-canvas',
-      {
-        width: 800,
-        height: 500,
-        backgroundColor: 'white',
-        preserveObjectStacking: true
-      }
-    )
+    let scene = new Scene('editing-canvas', 800, 500)
 
     let laserPointer = new LaserPointer()
-    let mirror = new Actor(
-      'mirror', 0
-    )
-    let sensor = new Actor(
-      'sensor', 33
-    )
+    let mirror = new Mirror('mirror', 35)
+    let sensor = new Body('sensor', 33)
 
-    laserPointer.setX(60)
-    laserPointer.setY(200)
+    laserPointer.setPos(new Vector(50, 250))
     laserPointer.lockMovementX(true)
-    laserPointer.setAngle(0)
+    laserPointer.setAngle(-35)
 
-    mirror.setX(200)
-    mirror.setY(40)
+    mirror.setPos(new Vector(200, 70))
     mirror.lockMovementY(true)
+    mirror.setAngle(0)
 
-    sensor.setX(600)
-    sensor.setY(300)
+    sensor.setPos(new Vector(600, 400))
     sensor.lockMovementX(true)
     sensor.lockMovementY(true)
 
-    const pathData = `
-      M ${laserPointer.getLaserStartX()} ${laserPointer.getLaserStartY()} 
-      L ${mirror.getX() + mirror.getWidth()} ${mirror.getY()} 
-      Z
-    `
+    // const pathData = `
+    //   M ${laserStart.getX()} ${laserStart.getY()}
+    //   L ${mirror.getX()} ${mirror.getY()}
+    //   Z
+    // `
 
-    laserPointer.addToScene(canvas)
-    mirror.addToScene(canvas)
-    sensor.addToScene(canvas)
+    // const pathData = `
+    //   M ${mirror.getLeftBoundX()} ${mirror.getLeftBoundY()}
+    //   L ${mirror.getRightBoundX()} ${mirror.getRightBoundY()}
+    //   Z
+    // `
 
-    const laser = new fabric.Path(pathData, {
-      stroke: 'red',
-      strokeWidth: 2,
-      lockScalingX: true,
-      lockScalingY: true,
-      lockMovementX: true,
-      lockMovementY: true,
-      selectable: false,
-      interactive: false,
-      evented: false
-    })
+    scene.addObject(laserPointer)
+    scene.addObject(mirror)
+    scene.addObject(sensor)
 
-    laser.setControlsVisibility({
-      mt: false,
-      mb: false,
-      ml: false,
-      mr: false,
-      tl: false,
-      tr: false,
-      bl: false,
-      br: false,
-      mtr: false
-    })
+    let path = scene.getLaserPath(laserPointer)
 
-    canvas.add(laser)
+    console.log(path)
+
+    // const laser = new fabric.Path(pathData, {
+    //   stroke: 'red',
+    //   strokeWidth: 2,
+    //   lockScalingX: true,
+    //   lockScalingY: true,
+    //   lockMovementX: true,
+    //   lockMovementY: true,
+    //   selectable: false,
+    //   interactive: false,
+    //   evented: false
+    // })
+
+    // laser.setControlsVisibility({
+    //   mt: false,
+    //   mb: false,
+    //   ml: false,
+    //   mr: false,
+    //   tl: false,
+    //   tr: false,
+    //   bl: false,
+    //   br: false,
+    //   mtr: false
+    // })
+
+    // canvas.add(laser)
   }
 }
 </script>
