@@ -1,13 +1,13 @@
-import { fabric } from 'fabric';
+import { fabric } from "fabric";
 
 export default abstract class SceneObject {
-  protected fabricObject: fabric.Object; 
+  protected fabricObject: fabric.Object;
 
-  constructor (fabricObject: fabric.Object) {
+  constructor(fabricObject: fabric.Object) {
     this.fabricObject = fabricObject;
   }
 
-  addToScene (canvas: fabric.Canvas): void {
+  addToScene(canvas: fabric.Canvas): void {
     canvas.add(this.fabricObject);
   }
 }
