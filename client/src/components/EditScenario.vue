@@ -6,22 +6,23 @@
   </div>
 </template>
 
-<script>
-import Header from './Header.vue'
-import EditingWorkspace from './EditingWorkspace.vue'
+<script lang="ts">
+import { defineComponent } from "vue";
+import Header from "./Header.vue";
+import EditingWorkspace from "./EditingWorkspace.vue";
 
-export default {
-  name: 'EditScenario',
+export default defineComponent({
+  name: "EditScenario",
   components: {
     Header,
-    EditingWorkspace
+    EditingWorkspace,
   },
-  data () {
+  data() {
     return {
-      msg: 'Welcome to Your Vue.js App'
-    }
-  }
-}
+      msg: "Welcome to Your Vue.js App",
+    };
+  },
+});
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -38,7 +39,8 @@ export default {
   flex: 1 1 auto;
 }
 
-h1, h2 {
+h1,
+h2 {
   font-weight: normal;
 }
 ul {
