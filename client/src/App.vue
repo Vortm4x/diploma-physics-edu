@@ -1,19 +1,25 @@
 <template>
   <div id="app">
-    <!-- <img src="./assets/logo.png"> -->
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
-<script>
-export default {
-  name: 'App'
+<script lang="ts">
+import { Options, Vue } from "vue-class-component";
+
+@Options({
+  props: {
+    msg: String,
+  },
+})
+export default class App extends Vue {
+  msg!: string;
 }
 </script>
 
-<style>
+<style lang="scss">
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -21,6 +27,7 @@ export default {
   margin-top: 0px;
   height: 100%;
 }
+
 body {
   height: 100vh;
   margin: 0px;
