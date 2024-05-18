@@ -8,6 +8,14 @@ app.use(morgan('combined'))
 app.use(express.json())
 // app.use(cors()) // lets access from any domain
 
+
+app.get('/status', (req, res) => {
+    res.send({
+        message: 'hello'
+    })
+})
+
+
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`)
 })
