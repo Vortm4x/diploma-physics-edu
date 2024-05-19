@@ -1,12 +1,15 @@
 import express from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
+import { db } from './models'
+const config = require("./config/config.ts")
+// import routesLogin from "./routes/login.ts"
 
 const app = express()
-const PORT = process.env.port || 8081
 app.use(morgan('combined'))
 app.use(express.json())
 app.use(cors()) // lets access from any domain
+require("./routes/login.ts")(app)
 
 
 app.get('/status', (req, res) => {
@@ -15,14 +18,10 @@ app.get('/status', (req, res) => {
     })
 })
 
-app.post('/register', (req, res) => {
-    res.send({
-        message: 'Your user was registered',
-        data: req.body
+
+
+db.sequelize.sync().then(() => {
+    app.listen(config.port, () => {
+        console.log(`Server listening on port ${config.port}`)
     })
-})
-
-
-app.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}`)
 })
