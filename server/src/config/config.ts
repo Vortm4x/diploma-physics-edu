@@ -1,8 +1,8 @@
 export default {
     port: 8081,
     db: {
-        database: "diploma_physics_edu",
-        user: "diploma_physics_edu",
+        database: "diploma-physics-edu",
+        user: "diploma-physics-edu",
         password: "12345",
         options: {
             dialect: "postgres" as const,
