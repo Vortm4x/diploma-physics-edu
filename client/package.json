@@ -11,7 +11,9 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^1.6.8",
     "core-js": "^3.8.3",
+    "cors": "^2.8.5",
     "fabric": "^5.3.0",
     "vue": "^3.2.13",
     "vue-class-component": "^8.0.0-0",
@@ -20,8 +22,11 @@
   },
   "devDependencies": {
     "@types/chai": "^4.2.15",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
     "@types/fabric": "^5.3.7",
     "@types/mocha": "^8.2.1",
+    "@types/morgan": "^1.9.9",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
     "@vue/cli-plugin-babel": "~5.0.0",
