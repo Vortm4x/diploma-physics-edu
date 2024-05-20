@@ -8,7 +8,7 @@ export default {
             res.send(user.toJSON());
         } catch (error) {
             console.error(error);
-            res.status(400).send(`User creation failed with email ${req.body.email}`);
+            res.status(400).send({ error: `User creation failed with email ${req.body.email}` });
         }
     }
 }

@@ -11,6 +11,7 @@
       v-model="password"
     />
     <br />
+    <div v-html="error"></div>
     <button @click="register">Register</button>
   </div>
 </template>
@@ -18,6 +19,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import AuthService from "@/services/AuthService";
+import { log } from "fabric/fabric-impl";
 
 export default defineComponent({
   name: "Register",
@@ -25,6 +27,7 @@ export default defineComponent({
     return {
       email: "",
       password: "",
+      error: null,
     };
   },
   watch: {
@@ -34,12 +37,17 @@ export default defineComponent({
   },
   methods: {
     async register() {
-      const response = await AuthService.register({
-        email: this.email,
-        password: this.password,
-      });
-      console.log(response.data);
-      console.log("TODO register user");
+      this.error = null;
+      try {
+        const response = await AuthService.register({
+          email: this.email,
+          password: this.password,
+        });
+        console.log(response.data);
+      } catch (error: any) {
+        this.error = error.response.data.error;
+        console.log(error.response);
+      }
     },
   },
 });
