@@ -1,32 +1,30 @@
 <template>
   <v-container fill-height fluid>
     <v-row justify="center">
-      <div id="register">
+      <div id="register" class="mt-10 pt-0 pl-4 pr-4 pb-2 elevation-2">
         <v-layout column>
           <v-flex xs6 offset-xs3>
-            <h1>Register</h1>
+            <h1 class="cyan">Register</h1>
             <v-divider></v-divider>
-            <v-chip class="elevation-2">
-              <input
-                type="email"
-                name="email"
-                placeholder="email"
-                v-model="email"
-              />
-            </v-chip>
-            <br />
-            <v-chip class="elevation-2">
-              <input
-                type="password"
-                name="password"
-                placeholder="password"
-                v-model="password"
-              />
-            </v-chip>
-            <br />
+            <v-text-field
+              label="Email"
+              variant="outlined"
+              type="email"
+              name="email"
+              placeholder="email"
+              v-model="email"
+            ></v-text-field>
+            <v-text-field
+              label="Password"
+              variant="outlined"
+              type="password"
+              name="password"
+              placeholder="password"
+              v-model="password"
+            ></v-text-field>
             <v-divider></v-divider>
-            <div v-html="error"></div>
-            <button @click="register">Register</button>
+            <div v-html="error" style="color: red"></div>
+            <v-btn variant="outlined" @click="register">Register</v-btn>
           </v-flex>
         </v-layout>
       </div>
