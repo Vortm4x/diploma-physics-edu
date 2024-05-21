@@ -1,19 +1,37 @@
 <template>
-  <div id="register">
-    <h1>Register</h1>
-
-    <input type="email" name="email" placeholder="email" v-model="email" />
-    <br />
-    <input
-      type="password"
-      name="password"
-      placeholder="password"
-      v-model="password"
-    />
-    <br />
-    <div v-html="error"></div>
-    <button @click="register">Register</button>
-  </div>
+  <v-container fill-height fluid>
+    <v-row justify="center">
+      <div id="register">
+        <v-layout column>
+          <v-flex xs6 offset-xs3>
+            <h1>Register</h1>
+            <v-divider></v-divider>
+            <v-chip class="elevation-2">
+              <input
+                type="email"
+                name="email"
+                placeholder="email"
+                v-model="email"
+              />
+            </v-chip>
+            <br />
+            <v-chip class="elevation-2">
+              <input
+                type="password"
+                name="password"
+                placeholder="password"
+                v-model="password"
+              />
+            </v-chip>
+            <br />
+            <v-divider></v-divider>
+            <div v-html="error"></div>
+            <button @click="register">Register</button>
+          </v-flex>
+        </v-layout>
+      </div>
+    </v-row>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -54,6 +72,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
+#register {
+  width: fit-content;
+}
+
 .class {
   color: black;
 }
