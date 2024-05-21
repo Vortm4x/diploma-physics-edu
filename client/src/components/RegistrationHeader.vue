@@ -1,0 +1,44 @@
+<template>
+  <v-toolbar fixed dark>
+    <v-toolbar-title class="mr-4">Optical Sim</v-toolbar-title>
+    <v-toolbar-items>
+      <v-btn @click="navigateTo('EditScenario')">Edit Scenario</v-btn>
+    </v-toolbar-items>
+    <v-spacer></v-spacer>
+    <v-spacer></v-spacer>
+    <v-spacer></v-spacer>
+    <v-spacer></v-spacer>
+    <v-spacer></v-spacer>
+    <v-spacer></v-spacer>
+    <v-spacer></v-spacer>
+    <v-spacer></v-spacer>
+    <v-toolbar-items>
+      <v-btn @click="navigateTo('register')">Sign up</v-btn>
+      <v-btn @click="navigateTo('login')">Log in</v-btn>
+    </v-toolbar-items>
+  </v-toolbar>
+</template>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
+  name: "RegistrationHeader",
+  methods: {
+    navigateTo(route: any) {
+      this.$router.push({ name: route });
+    },
+  },
+});
+</script>
+
+<style scoped>
+v-toolbar {
+  justify-content: left;
+  flex-direction: left;
+}
+a {
+  display: flex;
+  align-items: center;
+}
+</style>

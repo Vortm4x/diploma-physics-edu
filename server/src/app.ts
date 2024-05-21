@@ -20,9 +20,9 @@ app.get('/status', (req, res) => {
 })
 
 
-
-db.sequelize.sync().then(() => {
+// .sync({force: true}) clears the db every time
+db.sequelize.sync({force: true}).then(() => {
     app.listen(config.port, () => {
-        console.log(`Server listening on port ${config.port}`)
+        console.log(`Server listening on port ${config.port}\n`)
     })
 })

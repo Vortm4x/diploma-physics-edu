@@ -8,5 +8,8 @@ export default {
             dialect: "postgres" as const,
             host: "localhost",
         },
+    },
+    auth: {
+        jwtSecret: process.env.JWT_SECRET || "apple momo mu asbestos",
     }
 }

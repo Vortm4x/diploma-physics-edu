@@ -2,10 +2,10 @@
   <v-container class="pt-0 pl-0 pr-0" fill-height fluid>
     <registration-header />
     <v-row justify="center">
-      <div id="register" class="mt-10 pt-0 pl-4 pr-4 pb-2 elevation-2">
+      <div id="login" class="mt-10 pt-0 pl-4 pr-4 pb-2 elevation-2">
         <v-layout column>
           <v-flex xs6 offset-xs3>
-            <h1 class="cyan">Register</h1>
+            <h1 class="cyan">Login</h1>
             <v-divider></v-divider>
             <v-text-field
               label="Email"
@@ -25,7 +25,7 @@
             ></v-text-field>
             <v-divider></v-divider>
             <div v-html="error" style="color: red"></div>
-            <v-btn variant="outlined" @click="register">Register</v-btn>
+            <v-btn variant="outlined" @click="login">Log in</v-btn>
           </v-flex>
         </v-layout>
       </div>
@@ -40,7 +40,7 @@ import { log } from "fabric/fabric-impl";
 import RegistrationHeader from "./RegistrationHeader.vue";
 
 export default defineComponent({
-  name: "Register",
+  name: "Login",
   components: {
     RegistrationHeader,
   },
@@ -57,10 +57,10 @@ export default defineComponent({
     },
   },
   methods: {
-    async register() {
+    async login() {
       this.error = null;
       try {
-        const response = await AuthService.register({
+        const response = await AuthService.login({
           email: this.email,
           password: this.password,
         });
@@ -75,7 +75,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-#register {
+#login {
   width: fit-content;
 }
 

@@ -1,10 +1,16 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import EditScenario from "@/components/EditScenario.vue";
 import Register from "@/components/Register.vue";
+import Login from "@/components/Login.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
+    name: "root",
+    component: EditScenario,
+  },
+  {
+    path: "/EditScenario",
     name: "EditScenario",
     component: EditScenario,
   },
@@ -12,6 +18,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/register",
     name: "register",
     component: Register,
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: Login,
   },
 ];
 
