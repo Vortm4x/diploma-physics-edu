@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { db } from "../models"
+import { UserModel } from "../models"
 import jwt from "jsonwebtoken";
 import config from "../config/config"
 import bcrypt from "bcrypt-nodejs"
@@ -18,7 +18,7 @@ function comparePassword(candidatePassword : string, password: string) {
 export default {
     async register(req: Request, res: Response): Promise<undefined> {
         try {
-            const user = await db.User.create(req.body);
+            const user = await UserModel.User.create(req.body);
             res.send({
                 user: user.toJSON(),
                 jwtToken: jwtSignUser(user.toJSON()),
@@ -31,7 +31,7 @@ export default {
     async login(req: Request, res: Response): Promise<undefined> {
         try {
             const {email, password} = req.body;
-            const user = await db.User.findOne({
+            const user = await UserModel.User.findOne({
                 where: {
                     email: email,
                 }

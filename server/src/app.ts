@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
-import { db } from './models'
+import { UserModel } from './models'
 import config from "./config/config"
 // import routesLogin from "./routes/login.ts"
 
@@ -20,8 +20,8 @@ app.get('/status', (req, res) => {
 })
 
 
-// .sync({force: true}) clears the db every time
-db.sequelize.sync({force: true}).then(() => {
+// .sync({force: true}) clears the UserModel every time
+UserModel.sequelize.sync({force: true}).then(() => {
     app.listen(config.port, () => {
         console.log(`Server listening on port ${config.port}\n`)
     })

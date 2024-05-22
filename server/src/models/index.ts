@@ -12,7 +12,7 @@ const sequelize = new Sequelize(
     config.db.options,
 )
 
-const db = {
+const UserModel = {
     User: User(sequelize),
     sequelize: sequelize,
     Sequelize: Sequelize,
@@ -40,5 +40,5 @@ instance.save(); //async
 
 
 export { 
-    db
+    UserModel, GroupModel, UserGroupModel
 }

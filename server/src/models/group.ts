@@ -36,6 +36,7 @@ async function addMemberToGroup(group, user, UserGroupModel) {
   userGroup.save();
 }
 
+// TODO: add removeMember method
 // function removeMemberFromGroup(user) {
   
 // }
