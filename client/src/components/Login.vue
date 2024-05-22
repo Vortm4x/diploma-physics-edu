@@ -64,7 +64,8 @@ export default defineComponent({
           email: this.email,
           password: this.password,
         });
-        console.log(response.data);
+        this.$store.dispatch("setToken", response.data.jwtToken);
+        this.$store.dispatch("setEmail", response.data.email);
       } catch (error: any) {
         this.error = error.response.data.error;
         console.log(error.response);
