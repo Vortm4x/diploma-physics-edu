@@ -34,7 +34,7 @@ const UserGroupModel = mongoose.model("userGroup", UserGroupSchema);
 const instance = new GroupModel();
 instance.owner = "user123";
 instance.name = "Grade 5 A NURE";
-addMemberToGroup(instance, {email: "emailabc"}, UserGroupModel);
+addMemberToGroup(instance, {email: "abc@gmail.com"}, UserGroupModel);
 instance.save(); //async
 
 

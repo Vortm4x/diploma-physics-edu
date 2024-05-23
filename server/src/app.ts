@@ -11,6 +11,7 @@ app.use(express.json())
 app.use(express.urlencoded( { extended: true } ))
 app.use(cors()) // lets access from any domain
 require("./routes/auth.ts")(app)
+require("./routes/group.ts")(app)
 
 
 app.get('/status', (req, res) => {

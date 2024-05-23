@@ -60,10 +60,13 @@ export default defineComponent({
     async register() {
       this.error = null;
       try {
+        console.log("registering");
         const response = await AuthService.register({
           email: this.email,
           password: this.password,
         });
+        this.$store.dispatch("setToken", response.data.jwtToken);
+        this.$store.dispatch("setEmail", response.data.email);
         console.log(response.data);
       } catch (error: any) {
         this.error = error.response.data.error;

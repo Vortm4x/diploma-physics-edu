@@ -7,6 +7,9 @@
         @click="navigateTo('EditScenario')"
         >Edit Scenario</v-btn
       >
+      <v-btn v-if="$store.state.isUserLoggedIn" @click="navigateTo('groups')"
+        >Groups</v-btn
+      >
     </v-toolbar-items>
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
@@ -23,6 +26,9 @@
       <v-btn v-if="!$store.state.isUserLoggedIn" @click="navigateTo('login')"
         >Log in</v-btn
       >
+      <v-btn v-if="$store.state.isUserLoggedIn" @click="logOut()"
+        >Log Out</v-btn
+      >
     </v-toolbar-items>
   </v-toolbar>
 </template>
@@ -35,6 +41,12 @@ export default defineComponent({
   methods: {
     navigateTo(route: any) {
       this.$router.push({ name: route });
+    },
+    logOut() {
+      this.$store.dispatch("setToken", null);
+      this.$store.dispatch("setEmail", null);
+      // this.$store.dispatch("setisUserLoggedIn", false);
+      this.$router.push({ name: "login" });
     },
   },
 });

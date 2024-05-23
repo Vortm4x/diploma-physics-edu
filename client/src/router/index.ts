@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import EditScenario from "@/components/EditScenario.vue";
 import Register from "@/components/Register.vue";
 import Login from "@/components/Login.vue";
+import GroupsBrowser from "@/components/GroupsBrowser.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -23,6 +24,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/login",
     name: "login",
     component: Login,
+  },
+  {
+    path: "/groups",
+    name: "groups",
+    component: GroupsBrowser,
   },
 ];
 
