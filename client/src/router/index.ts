@@ -8,7 +8,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "root",
-    component: EditScenario,
+    component: Register,
   },
   {
     path: "/EditScenario",
