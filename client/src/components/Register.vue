@@ -36,7 +36,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import AuthService from "@/services/AuthService";
-import { log } from "fabric/fabric-impl";
 import RegistrationHeader from "./RegistrationHeader.vue";
 
 export default defineComponent({
@@ -67,6 +66,7 @@ export default defineComponent({
         });
         this.$store.dispatch("setToken", response.data.jwtToken);
         this.$store.dispatch("setEmail", response.data.email);
+        this.$router.push({ name: "root" });
         console.log(response.data);
       } catch (error: any) {
         this.error = error.response.data.error;

@@ -1,14 +1,14 @@
 import Api from "@/services/Api";
 
 export default {
-  async getGroups(token: any) {
+  async getGroups(token: string) {
     try {
       return (await Api().post("/get_groups", { token: token })).data.groups;
     } catch (error) {
       console.error("get_groups call returned an error ", error);
     }
   },
-  async getGroup(groupName: string, token: any) {
+  async getGroup(groupName: string, token: string) {
     try {
       const result = (
         await Api().post("/get_group", { groupName: groupName, token: token })
@@ -22,7 +22,7 @@ export default {
       return error.response.data;
     }
   },
-  async addGroup(token: any, name: string) {
+  async addGroup(token: string, name: string) {
     try {
       return (await Api().post("/add_group", { token: token, name: name })).data
         .group;

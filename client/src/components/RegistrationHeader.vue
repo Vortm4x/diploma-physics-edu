@@ -39,7 +39,7 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "RegistrationHeader",
   methods: {
-    navigateTo(route: any) {
+    navigateTo(route: string) {
       this.$router.push({ name: route });
     },
     logOut() {

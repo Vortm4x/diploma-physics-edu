@@ -58,10 +58,12 @@ import ListPanel from "./ListPanel.vue";
 import GroupsService from "@/services/GroupsService";
 
 function getGroups(component: any) {
-  GroupsService.getGroups(component.$store.state.token).then((groups: any) => {
-    console.log(groups);
-    component.$data.groups = groups;
-  });
+  GroupsService.getGroups(component.$store.state.token as string).then(
+    (groups: any) => {
+      console.log(groups);
+      component.$data.groups = groups;
+    }
+  );
 }
 
 export default defineComponent({
@@ -78,7 +80,10 @@ export default defineComponent({
   },
   methods: {
     addGroup() {
-      GroupsService.addGroup(this.$store.state.token, this.$data.groupName)
+      GroupsService.addGroup(
+        this.$store.state.token as string,
+        this.$data.groupName
+      )
         .then((group: any) => {
           console.log(group);
         })
