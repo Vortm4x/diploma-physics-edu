@@ -8,7 +8,6 @@ module.exports = (app: express.Express) => {
         GroupController.addMember)
     app.post('/get_groups',
         GroupController.getGroups)
-    // TODO
-    // app.get('/group_members', )
-    // app.get('/group_owner', )
+    app.post('/get_group',
+        GroupController.getGroup)
 }

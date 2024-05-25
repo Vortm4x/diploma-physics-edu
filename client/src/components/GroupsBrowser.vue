@@ -41,12 +41,12 @@
       <v-list lines="one">
         <v-list-item
           v-for="(group, index) in groups"
+          @click="navigateToGroup(group.name)"
           :key="index"
           :title="group.name"
           :subtitle="group.owner"
         ></v-list-item>
       </v-list>
-      <!-- <span>{{ groups }}</span> -->
     </list-panel>
   </div>
 </template>
@@ -83,6 +83,9 @@ export default defineComponent({
           console.log(group);
         })
         .then(() => setTimeout(() => getGroups(this), 3000));
+    },
+    navigateToGroup(groupName: string) {
+      this.$router.push({ name: "group", params: { groupName: groupName } });
     },
   },
   mounted() {

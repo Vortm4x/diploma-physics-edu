@@ -22,7 +22,7 @@ app.get('/status', (req, res) => {
 
 
 // .sync({force: true}) clears the UserModel every time
-UserModel.sequelize.sync({force: true}).then(() => {
+UserModel.sequelize.sync().then(() => {
     app.listen(config.port, () => {
         console.log(`Server listening on port ${config.port}\n`)
     })

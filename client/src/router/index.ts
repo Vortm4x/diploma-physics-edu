@@ -3,6 +3,7 @@ import EditScenario from "@/components/EditScenario.vue";
 import Register from "@/components/Register.vue";
 import Login from "@/components/Login.vue";
 import GroupsBrowser from "@/components/GroupsBrowser.vue";
+import Group from "@/components/Group.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -29,6 +30,12 @@ const routes: Array<RouteRecordRaw> = [
     path: "/groups",
     name: "groups",
     component: GroupsBrowser,
+  },
+  {
+    path: "/group:groupName",
+    name: "group",
+    component: Group,
+    props: true,
   },
 ];
 

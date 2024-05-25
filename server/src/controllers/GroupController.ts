@@ -32,6 +32,7 @@ export default {
             });
         }
     },
+
     async addGroup(req: Request, res: Response): Promise<undefined> {
         try {
             const decoded = jwt.verify(req.body.token, config.auth.jwtSecret);
@@ -60,6 +61,7 @@ export default {
             });
         }
     },
+
     async getGroups(req: Request, res: Response): Promise<undefined> {
         try {
             console.log("Incoming getgroups request", req.body);
@@ -83,6 +85,46 @@ export default {
                 error: "Probably empty jwt token"
             });
         }
+    },
+
+    async getGroup(req: Request, res: Response): Promise<undefined> {
+        try {
+            console.log("Incoming getgroup request", req.body);
+            const decoded = jwt.verify(req.body.token, config.auth.jwtSecret);
+            // console.log((decoded as JwtPayload));
+
+            const groupInfo = await db.GroupModel.findOne({ name: req.body.groupName });
+            if (!groupInfo) {
+                res.status(400).send({
+                    error: "Probably wrong data"
+                });
+                return;
+            }
+
+            console.log(groupInfo);
+            console.log(groupInfo.members.indexOf((decoded as JwtPayload).email));
+            console.log((groupInfo.members.indexOf((decoded as JwtPayload).email) === -1)
+                && groupInfo.owner != (decoded as JwtPayload).email);
+            
+            
+            if ((groupInfo.members.indexOf((decoded as JwtPayload).email) === -1)
+                && groupInfo.owner != (decoded as JwtPayload).email) {
+                res.status(403).send({
+                    error: "No access"
+                });
+                return;
+            }
+            // console.log(groupInfo);
+            
+            res.send({ owner: groupInfo.owner, members: groupInfo.members });
+        } catch (error) {
+            console.error("Error occured in getroup controller", error);
+            res.status(400).send({
+                error: "Probably empty jwt token"
+            });
+        }
     }
+
+    
 
 }
