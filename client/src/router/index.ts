@@ -4,6 +4,7 @@ import Register from "@/components/Register.vue";
 import Login from "@/components/Login.vue";
 import GroupsBrowser from "@/components/GroupsBrowser.vue";
 import Group from "@/components/Group.vue";
+import ScenariosBrowser from "@/components/ScenariosBrowser.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -36,6 +37,11 @@ const routes: Array<RouteRecordRaw> = [
     name: "group",
     component: Group,
     props: true,
+  },
+  {
+    path: "/scenarios",
+    name: "scenarios",
+    component: ScenariosBrowser,
   },
 ];
 

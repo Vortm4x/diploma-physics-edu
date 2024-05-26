@@ -19,8 +19,9 @@ const UserModel = {
 };
 
 import mongoose from "mongoose";
-import { GroupSchema, addMemberToGroup } from "./group";
+import { GroupSchema } from "./group";
 import { UserGroupSchema } from "./userGroup";
+import { ScenarioSchema } from "./scenario";
 
 const mongoDBUsername = "artemdiachenko1";
 const mongoDBPassword = "8LOsFCuJfJVbB9WT";
@@ -29,16 +30,15 @@ mongoose.connect(`mongodb+srv://${mongoDBUsername}:${mongoDBPassword}@diploma-ph
 
 const GroupModel = mongoose.model("group", GroupSchema);
 const UserGroupModel = mongoose.model("userGroup", UserGroupSchema);
+const ScenarioModel = mongoose.model("scenario", ScenarioSchema);
 
-
-const instance = new GroupModel();
-instance.owner = "user123";
-instance.name = "Grade 5 A NURE";
-addMemberToGroup(instance, {email: "abc@gmail.com"}, UserGroupModel);
-instance.save(); //async
+// let instance = new ScenarioModel();
+// instance.owner = "abc@gmail.com";
+// instance.name = "My Scenario";
+// instance.save(); //async
 
 
 
 export { 
-    UserModel, GroupModel, UserGroupModel
+    UserModel, GroupModel, UserGroupModel, ScenarioModel
 }

@@ -7,12 +7,13 @@
         @click="navigateTo('EditScenario')"
         >Edit Scenario</v-btn
       >
+      <v-btn v-if="$store.state.isUserLoggedIn" @click="navigateTo('scenarios')"
+        >Scenarios</v-btn
+      >
       <v-btn v-if="$store.state.isUserLoggedIn" @click="navigateTo('groups')"
         >Groups</v-btn
       >
     </v-toolbar-items>
-    <v-spacer></v-spacer>
-    <v-spacer></v-spacer>
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
