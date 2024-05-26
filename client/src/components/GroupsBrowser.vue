@@ -39,13 +39,19 @@
         </template>
       </v-dialog>
       <v-list lines="one">
-        <v-list-item
-          v-for="(group, index) in groups"
-          @click="navigateToGroup(group.name)"
-          :key="index"
-          :title="group.name"
-          :subtitle="group.owner"
-        ></v-list-item>
+        <v-col>
+          <v-list-item
+            v-for="(group, index) in groups"
+            @click="navigateToGroup(group.name)"
+            :key="index"
+            :title="group.name"
+            :subtitle="group.owner"
+            ><span>Members: {{ group.members.length }}&nbsp;&nbsp;&nbsp;</span>
+            <span v-if="group.sharedScenarios"
+              >Shared scenarios: {{ group.sharedScenarios.length }}</span
+            ></v-list-item
+          >
+        </v-col>
       </v-list>
     </list-panel>
   </div>
