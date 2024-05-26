@@ -31,7 +31,7 @@ async function findOrCreateUserGroup(email, UserGroupModel) {
 async function addMemberToGroup(group, user, UserGroupModel) {
   group.members.push(user.email);
   const userGroup = await findOrCreateUserGroup(user.email, UserGroupModel);
-  group.save();
+  // group.save(); // will save in parallel
   userGroup.groups.push(group.id);
   userGroup.save();
 }

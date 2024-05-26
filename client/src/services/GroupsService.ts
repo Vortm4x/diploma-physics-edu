@@ -30,4 +30,17 @@ export default {
       console.error("addGroup call returned an error ", error);
     }
   },
+  async addMember(token: string, email: string, group: string) {
+    try {
+      return (
+        await Api().post("/add_member", {
+          token: token,
+          email: email,
+          group: group,
+        })
+      ).data;
+    } catch (error) {
+      console.error("addGroup call returned an error ", error);
+    }
+  },
 };

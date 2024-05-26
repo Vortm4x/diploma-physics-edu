@@ -2,9 +2,44 @@
   <registration-header />
   <div class="container">
     <list-panel :title="groupName" class="panel">
-      <p v-if="errorMessage !== null" class="error">
-        Error: {{ errorMessage }}
-      </p>
+      <p v-if="errorMessage !== ''" class="error">Error: {{ errorMessage }}</p>
+      <v-dialog max-width="500" v-if="$store.state.email == owner">
+        <template v-slot:activator="{ props: activatorProps }">
+          <v-btn
+            v-bind="activatorProps"
+            color="surface-variant"
+            text="Add member"
+            variant="flat"
+          ></v-btn>
+        </template>
+
+        <template v-slot:default="{ isActive }">
+          <v-card title="Dialog">
+            <v-card-text>Specify an email.</v-card-text>
+            <v-text-field
+              label="Email"
+              variant="outlined"
+              name="email"
+              placeholder="Email"
+              v-model="newMemberEmail"
+            ></v-text-field>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                @click="
+                  addMember();
+                  isActive.value = false;
+                "
+                class="pr-4"
+                >Add member</v-btn
+              >
+              <v-btn text="Close" @click="isActive.value = false"></v-btn>
+            </v-card-actions>
+          </v-card>
+        </template>
+      </v-dialog>
+
       <p>Owner: {{ owner }}</p>
       <p>Members: {{ members }}</p>
     </list-panel>
@@ -16,6 +51,7 @@ import GroupsService from "@/services/GroupsService";
 import { defineComponent } from "vue";
 import RegistrationHeader from "./RegistrationHeader.vue";
 import ListPanel from "./ListPanel.vue";
+import store from "@/store";
 
 async function getGroup(groupName: string, component: any) {
   console.log("GroupName", groupName);
@@ -45,15 +81,26 @@ export default defineComponent({
       groupName: "",
       owner: "",
       errorMessage: "",
+      newMemberEmail: "",
       members: [],
       sharedScenarios: [],
     };
   },
+  methods: {
+    addMember() {
+      GroupsService.addMember(
+        this.$store.state.token as string,
+        this.$data.newMemberEmail,
+        this.$data.groupName
+      ).then(() =>
+        setTimeout(
+          () => getGroup(this.$route.params.groupName as string, this),
+          3000
+        )
+      );
+    },
+  },
   async mounted() {
-    // GroupsService.getGroups(this.$store.state.token).then((groups: any) => {
-    //   console.log(groups);
-    //   this.$data.groups = groups;
-    // });
     console.log(this.$route.params.groupName);
     await getGroup(this.$route.params.groupName as string, this);
     console.log("Group.vue mounted");

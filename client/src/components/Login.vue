@@ -63,11 +63,14 @@ export default defineComponent({
           email: this.email,
           password: this.password,
         });
+        console.log(response.data);
         this.$store.dispatch("setToken", response.data.jwtToken);
-        this.$store.dispatch("setEmail", response.data.email);
+        this.$store.dispatch("setEmail", response.data.user.email);
+        this.$router.push({ name: "root" });
       } catch (error: any) {
-        this.error = error.response.data.error;
-        console.log(error.response);
+        console.log(error);
+        // this.error = error.response.data.error;
+        // console.log(error.response);
       }
     },
   },
