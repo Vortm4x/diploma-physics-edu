@@ -8,7 +8,6 @@ export default {
         try {
             const decoded = jwt.verify(req.body.token, config.auth.jwtSecret);
             const scenarios = await db.ScenarioModel.find({ owner: (decoded as JwtPayload).email });
-            console.log(scenarios);
             res.send({
                 scenarios: scenarios,
             });

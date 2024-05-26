@@ -6,6 +6,4 @@ module.exports = (app: express.Express) => {
         ScenarioController.addScenario)
     app.post('/get_scenarios',
         ScenarioController.getScenarios)
-    // app.post('/get_group',
-    //     ScenarioController.getScenario)
 }

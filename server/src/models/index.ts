@@ -22,6 +22,7 @@ import mongoose from "mongoose";
 import { GroupSchema } from "./group";
 import { UserGroupSchema } from "./userGroup";
 import { ScenarioSchema } from "./scenario";
+import { SharedScenarioSchema } from "./sharedScenario";
 
 const mongoDBUsername = "artemdiachenko1";
 const mongoDBPassword = "8LOsFCuJfJVbB9WT";
@@ -31,6 +32,7 @@ mongoose.connect(`mongodb+srv://${mongoDBUsername}:${mongoDBPassword}@diploma-ph
 const GroupModel = mongoose.model("group", GroupSchema);
 const UserGroupModel = mongoose.model("userGroup", UserGroupSchema);
 const ScenarioModel = mongoose.model("scenario", ScenarioSchema);
+const SharedScenarioModel = mongoose.model("sharedScenario", SharedScenarioSchema);
 
 // let instance = new ScenarioModel();
 // instance.owner = "abc@gmail.com";
@@ -40,5 +42,5 @@ const ScenarioModel = mongoose.model("scenario", ScenarioSchema);
 
 
 export { 
-    UserModel, GroupModel, UserGroupModel, ScenarioModel
+    UserModel, GroupModel, UserGroupModel, ScenarioModel, SharedScenarioModel
 }

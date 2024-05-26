@@ -1,12 +1,13 @@
 import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
-// const ObjectId = Schema.ObjectId;
+const ObjectId = Schema.ObjectId;
 
 const GroupSchema = new Schema({
   owner: { type: String, required: true, unique: false }, // email
   name: { type: String, required: true, unique: true },
-  members: [String]
+  members: [String],
+  sharedScenarios: [ObjectId],
 });
 
 async function findOrCreateUserGroup(email, UserGroupModel) {

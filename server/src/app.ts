@@ -13,6 +13,7 @@ app.use(cors()) // lets access from any domain
 require("./routes/auth.ts")(app)
 require("./routes/group.ts")(app)
 require("./routes/scenario.ts")(app)
+require("./routes/sharedScenario.ts")(app)
 
 
 app.get('/status', (req, res) => {

@@ -18,4 +18,22 @@ export default {
       console.error("add_scenario call returned an error ", error);
     }
   },
+
+  async shareScenario(
+    token: string | null,
+    groupName: string,
+    scenarioName: string
+  ) {
+    try {
+      return (
+        await Api().post("/share_scenario", {
+          token: token,
+          groupName: groupName,
+          name: scenarioName,
+        })
+      ).data.scenario;
+    } catch (error) {
+      console.error("add_scenario call returned an error ", error);
+    }
+  },
 };
