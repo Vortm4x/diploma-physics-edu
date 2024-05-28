@@ -114,9 +114,9 @@ export default {
                 });
                 return;
             }
-            // console.log(groupInfo);
+            const sharedScenarios = await db.SharedScenarioModel.find({ _id: groupInfo.sharedScenarios });
             
-            res.send({ owner: groupInfo.owner, members: groupInfo.members });
+            res.send({ owner: groupInfo.owner, members: groupInfo.members, sharedScenarios: sharedScenarios });
         } catch (error) {
             console.error("Error occured in getroup controller", error);
             res.status(400).send({

@@ -41,7 +41,32 @@
       </v-dialog>
 
       <p>Owner: {{ owner }}</p>
-      <p>Members: {{ members }}</p>
+      <div class="double-column-container">
+        <list-panel title="Members" class="members-column">
+          <v-list lines="one">
+            <v-list-item
+              v-for="(member, index) in members"
+              :key="index"
+              :title="member"
+            ></v-list-item>
+          </v-list>
+        </list-panel>
+        <list-panel title="Scenarios" class="scenarios-column">
+          <v-list lines="one">
+            <v-list-item
+              v-for="(sharedScenario, index) in sharedScenarios"
+              :key="index"
+              :title="sharedScenario.name"
+              :subtitle="
+                sharedScenario.owner +
+                ', date: ' +
+                new Date(sharedScenario.dateShared).toUTCString()
+              "
+            ></v-list-item>
+          </v-list>
+          <!-- <p>{{ sharedScenarios }}</p> -->
+        </list-panel>
+      </div>
     </list-panel>
   </div>
 </template>
@@ -67,7 +92,7 @@ async function getGroup(groupName: string, component: any) {
   component.$data.groupName = groupName;
   component.$data.owner = group.owner;
   component.$data.members = group.members;
-  // component.$data.sharedScenarios = group.sharedScenarios;
+  component.$data.sharedScenarios = group.sharedScenarios;
 }
 
 export default defineComponent({
@@ -120,5 +145,17 @@ export default defineComponent({
 }
 .error {
   color: red;
+}
+.double-column-container {
+  display: flex;
+  flex-direction: row;
+}
+.members-column {
+  /* flex-basis: 10px; */
+  flex-grow: 1;
+}
+.scenarios-column {
+  margin-left: 10px;
+  flex-grow: 2;
 }
 </style>

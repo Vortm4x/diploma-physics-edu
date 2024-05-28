@@ -61,13 +61,11 @@
                 <v-card-text
                   >Choose a group to share the scenario in</v-card-text
                 >
-                <v-text-field
-                  label="Group name"
-                  variant="outlined"
-                  name="Group name"
-                  placeholder="Gpoup name"
+                <v-select
                   v-model="groupName"
-                ></v-text-field>
+                  label="Group"
+                  :items="groups"
+                ></v-select>
 
                 <v-card-actions>
                   <v-spacer></v-spacer>
@@ -95,12 +93,22 @@ import { defineComponent } from "vue";
 import RegistrationHeader from "./RegistrationHeader.vue";
 import ListPanel from "./ListPanel.vue";
 import ScenariosService from "@/services/ScenariosService";
+import GroupsService from "@/services/GroupsService";
 
 function getScenarios(component: any) {
   ScenariosService.getScenarios(component.$store.state.token as string).then(
     (scenarios: any) => {
       console.log(scenarios);
       component.$data.scenarios = scenarios;
+    }
+  );
+}
+
+function getGroupsNames(component: any) {
+  GroupsService.getGroups(component.$store.state.token as string).then(
+    (groups: any) => {
+      console.log(groups);
+      component.$data.groups = groups.map((a: any) => a.name);
     }
   );
 }
@@ -115,7 +123,8 @@ export default defineComponent({
     return {
       scenarios: undefined,
       scenarioName: "",
-      groupName: "",
+      groupName: undefined,
+      groups: [],
     };
   },
   methods: {
@@ -138,14 +147,17 @@ export default defineComponent({
     async shareScenario(scenarioName: string) {
       const sharedScenario = await ScenariosService.shareScenario(
         this.$store.state.token,
-        this.$data.groupName,
+        this.$data.groupName as unknown as string,
         scenarioName
       );
+      console.log(this.$data.groups);
+      console.log(this.$data.groupName);
       console.log(sharedScenario);
     },
   },
   mounted() {
     getScenarios(this);
+    getGroupsNames(this);
   },
 });
 </script>

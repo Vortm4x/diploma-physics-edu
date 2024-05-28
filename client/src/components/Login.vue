@@ -5,7 +5,7 @@
       <div id="login" class="mt-10 pt-0 pl-4 pr-4 pb-2 elevation-2">
         <v-layout column>
           <v-flex xs6 offset-xs3>
-            <h1 class="cyan">Login</h1>
+            <h1 class="cyan">&nbsp;&nbsp;Log in&nbsp;&nbsp;</h1>
             <v-divider></v-divider>
             <v-text-field
               label="Email"
@@ -69,7 +69,7 @@ export default defineComponent({
         this.$router.push({ name: "root" });
       } catch (error: any) {
         console.log(error);
-        // this.error = error.response.data.error;
+        this.error = error.response.data.error;
         // console.log(error.response);
       }
     },
