@@ -45,7 +45,7 @@ export default {
                                 group.sharedScenarios.push(sharedScenario[0]._id);
                                 await group.save({ session: session });
                             } catch (error) {
-                                console.error("Error occured in shareScenario controller in transaction", error);
+                                console.error("Error occurred in shareScenario controller in transaction", error);
                             }
                         })();
                     })
