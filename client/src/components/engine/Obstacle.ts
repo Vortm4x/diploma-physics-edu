@@ -4,6 +4,7 @@ import { fabric } from "fabric";
 
 export default abstract class Obstacle extends Actor {
   abstract surfaces: ISurface[];
+  readonly color: string;
 
   constructor(width: number, height: number, color: string, opacity: number) {
     const fabricObject = new fabric.Rect();
@@ -13,5 +14,7 @@ export default abstract class Obstacle extends Actor {
     fabricObject.opacity = opacity;
 
     super(fabricObject, 0);
+
+    this.color = color;
   }
 }

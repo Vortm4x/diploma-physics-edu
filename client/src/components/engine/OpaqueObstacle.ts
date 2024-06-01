@@ -1,9 +1,16 @@
 import Boundary from "./Boundary";
+import IRestorable from "./IRestorable";
 import ISurface from "./ISurface";
 import Obstacle from "./Obstacle";
 import Vector from "./Vector";
 
-export default class OpaqueObstacle extends Obstacle {
+interface IOpaqueObstacleProps {
+  width: number;
+  height: number;
+  color: string;
+}
+
+export default class OpaqueObstacle extends Obstacle implements IRestorable {
   constructor(width: number, height: number, color: string) {
     super(width, height, color, 1);
   }
@@ -24,5 +31,32 @@ export default class OpaqueObstacle extends Obstacle {
     ];
 
     return collection;
+  }
+
+  export(): object {
+    return {
+      type: "OpaqueObstacle",
+      width: this.width,
+      height: this.height,
+      color: this.color,
+
+      x: this.x,
+      y: this.y,
+      degrees: this.degrees,
+      lockMovementX: this.lockMovementX,
+      lockMovementY: this.lockMovementY,
+    };
+  }
+
+  static restore(data: object): OpaqueObstacle {
+    const objProps = data as IOpaqueObstacleProps;
+
+    const obj = new OpaqueObstacle(
+      objProps.width,
+      objProps.height,
+      objProps.color
+    );
+
+    return obj;
   }
 }

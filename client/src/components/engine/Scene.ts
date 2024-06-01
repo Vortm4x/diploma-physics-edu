@@ -12,12 +12,34 @@ import { isSurface } from "./ISurface";
 import { isReflectableSurface } from "./IReflectableSurface";
 import { isRefractableSurface } from "./IRefractableSurface";
 import LightSensor from "./LightSensor";
+import IRestorable from "./IRestorable";
+import { isRestorable } from "./IRestorable";
+import Actor from "./Actor";
+import Mirror from "./Mirror";
+import OpaqueObstacle from "./OpaqueObstacle";
+import TransparentObstacle from "./TransparentObstacle";
 
-export default class Scene {
+interface IActorProps {
+  type: string;
+
+  x: number;
+  y: number;
+  degrees: number;
+  lockMovementX: boolean;
+  lockMovementY: boolean;
+}
+
+interface ISceneProps {
+  width: number;
+  height: number;
+  entries: object[];
+}
+
+export default class Scene implements IRestorable {
   protected canvas: fabric.Canvas;
   public readonly objects: SceneObject[];
 
-  constructor(sceneId: string, width: number, height: number) {
+  constructor(width: number, height: number) {
     const fabricData = {
       width: width,
       height: height,
@@ -25,7 +47,7 @@ export default class Scene {
       preserveObjectStacking: true,
     };
 
-    this.canvas = new fabric.Canvas(sceneId, fabricData);
+    this.canvas = new fabric.Canvas("editing-canvas", fabricData);
     this.objects = [];
   }
 
@@ -157,5 +179,60 @@ export default class Scene {
     }
 
     return nearestSurfaceObj;
+  }
+
+  export(): object {
+    const entries: object[] = [];
+
+    for (const sceneObj of this.objects) {
+      const obj = sceneObj as unknown;
+
+      if (isRestorable(obj as IRestorable)) {
+        const restorableObj = obj as IRestorable;
+
+        entries.push(restorableObj.export());
+      }
+    }
+
+    return {
+      width: this.width,
+      height: this.height,
+      entries: entries,
+    };
+  }
+
+  static restore(data: object): Scene {
+    const sceneProps = data as ISceneProps;
+
+    const scene = new Scene(sceneProps.width, sceneProps.height);
+
+    for (const objProps of sceneProps.entries) {
+      const actorProps = objProps as IActorProps;
+      let actor = null;
+
+      if (actorProps.type === "LaserPointer") {
+        actor = LaserPointer.restore(objProps);
+      } else if (actorProps.type === "Mirror") {
+        actor = Mirror.restore(objProps);
+      } else if (actorProps.type === "LightSensor") {
+        actor = LightSensor.restore(objProps);
+      } else if (actorProps.type === "OpaqueObstacle") {
+        actor = OpaqueObstacle.restore(objProps);
+      } else if (actorProps.type === "TransparentObstacle") {
+        actor = TransparentObstacle.restore(objProps);
+      }
+
+      if (actor != null) {
+        actor.x = actorProps.x;
+        actor.y = actorProps.y;
+        actor.degrees = actorProps.degrees;
+        actor.lockMovementX = actorProps.lockMovementX;
+        actor.lockMovementY = actorProps.lockMovementY;
+
+        scene.addObject(actor);
+      }
+    }
+
+    return scene;
   }
 }

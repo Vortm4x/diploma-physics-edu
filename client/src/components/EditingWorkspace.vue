@@ -14,16 +14,77 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import Scene from "./engine/Scene";
-import LaserPointer from "./engine/LaserPointer";
-import Mirror from "./engine/Mirror";
-import LightSensor from "./engine/LightSensor";
-import Vector from "./engine/Vector";
-import TransparentObstacle from "./engine/TransparentObstacle";
+// import LaserPointer from "./engine/LaserPointer";
+// import Mirror from "./engine/Mirror";
+// import LightSensor from "./engine/LightSensor";
+// import Vector from "./engine/Vector";
+// import TransparentObstacle from "./engine/TransparentObstacle";
+
+let scene = new Scene(0, 0);
 
 export default defineComponent({
   name: "EditingWorkspace",
+
+  data() {
+    return scene.export();
+  },
+
   mounted() {
-    const scene = new Scene("editing-canvas", 800, 500);
+    scene = Scene.restore({
+      width: 800,
+      height: 500,
+      entries: [
+        {
+          type: "LaserPointer",
+          x: 250,
+          y: 70,
+          degrees: 70,
+          lockMovementX: false,
+          lockMovementY: false,
+        },
+        {
+          type: "Mirror",
+          x: 400,
+          y: 85,
+          degrees: -15,
+          lockMovementX: false,
+          lockMovementY: false,
+        },
+        {
+          type: "OpaqueObstacle",
+          x: 400,
+          y: 400,
+          degrees: -15,
+          lockMovementX: false,
+          lockMovementY: false,
+          width: 20,
+          height: 100,
+          color: "green",
+        },
+        {
+          type: "TransparentObstacle",
+          x: 300,
+          y: 300,
+          degrees: 15,
+          lockMovementX: false,
+          lockMovementY: false,
+          width: 20,
+          height: 100,
+          color: "red",
+          refractionCoef: 1.8,
+        },
+        {
+          type: "LightSensor",
+          x: 250,
+          y: 450,
+          degrees: 15,
+          lockMovementX: false,
+          lockMovementY: false,
+        },
+      ],
+    });
+    /*
+    scene = new Scene(800, 500);
 
     const pointer = new LaserPointer();
     const mirrorA = new Mirror();
@@ -63,6 +124,7 @@ export default defineComponent({
     rect.degrees = 90;
     scene.addObject(rect);
 
+    */
     const updateCallback = () => {
       scene.update();
     };

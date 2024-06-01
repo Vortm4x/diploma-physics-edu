@@ -1,9 +1,20 @@
+import IRestorable from "./IRestorable";
 import ISurface from "./ISurface";
 import Obstacle from "./Obstacle";
 import RefractionBoundary from "./RefractionBoundary";
 import Vector from "./Vector";
 
-export default class TransparentObstacle extends Obstacle {
+interface ITransparentObstacleProps {
+  width: number;
+  height: number;
+  color: string;
+  refractionCoef: number;
+}
+
+export default class TransparentObstacle
+  extends Obstacle
+  implements IRestorable
+{
   public readonly refractionCoef: number;
 
   constructor(
@@ -32,5 +43,34 @@ export default class TransparentObstacle extends Obstacle {
     ];
 
     return collection;
+  }
+
+  export(): object {
+    return {
+      type: "OpaqueObstacle",
+      width: this.width,
+      height: this.height,
+      color: this.color,
+      refractionCoef: this.refractionCoef,
+
+      x: this.x,
+      y: this.y,
+      degrees: this.degrees,
+      lockMovementX: this.lockMovementX,
+      lockMovementY: this.lockMovementY,
+    };
+  }
+
+  static restore(data: object): TransparentObstacle {
+    const objProps = data as ITransparentObstacleProps;
+
+    const obj = new TransparentObstacle(
+      objProps.width,
+      objProps.height,
+      objProps.color,
+      objProps.refractionCoef
+    );
+
+    return obj;
   }
 }

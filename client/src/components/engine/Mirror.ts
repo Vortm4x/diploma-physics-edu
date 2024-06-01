@@ -1,11 +1,15 @@
 import Actor from "./Actor";
 import IReflectableSurface from "./IReflectableSurface";
+import IRestorable from "./IRestorable";
 import Ray from "./Ray";
 import Segment from "./Segment";
 import Vector from "./Vector";
 import { fabric } from "fabric";
 
-export default class Mirror extends Actor implements IReflectableSurface {
+export default class Mirror
+  extends Actor
+  implements IReflectableSurface, IRestorable
+{
   constructor() {
     const scale = 0.25;
     const fabricObject = new fabric.Image("mirror");
@@ -32,5 +36,23 @@ export default class Mirror extends Actor implements IReflectableSurface {
     const norm = new Segment(ray.source, proj).vector;
 
     return norm.angleTo(new Vector(1, 0)) + norm.angleTo(fall);
+  }
+
+  export(): object {
+    return {
+      type: "Mirror",
+
+      x: this.x,
+      y: this.y,
+      degrees: this.degrees,
+      lockMovementX: this.lockMovementX,
+      lockMovementY: this.lockMovementY,
+    };
+  }
+
+  static restore(_data: object): Mirror {
+    const obj = new Mirror();
+
+    return obj;
   }
 }
