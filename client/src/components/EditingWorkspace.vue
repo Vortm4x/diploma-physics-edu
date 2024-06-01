@@ -68,8 +68,8 @@ export default defineComponent({
           degrees: 15,
           lockMovementX: false,
           lockMovementY: false,
-          width: 20,
-          height: 100,
+          width: 200,
+          height: 50,
           color: "red",
           refractionCoef: 1.8,
         },
@@ -83,48 +83,7 @@ export default defineComponent({
         },
       ],
     });
-    /*
-    scene = new Scene(800, 500);
 
-    const pointer = new LaserPointer();
-    const mirrorA = new Mirror();
-    const mirrorB = new Mirror();
-    const mirrorC = new Mirror();
-    const mirrorD = new Mirror();
-    const sensor = new LightSensor();
-
-    pointer.pos = new Vector(250, 70);
-    pointer.degrees = 70;
-
-    mirrorA.pos = new Vector(290, 70);
-    mirrorA.degrees = -15;
-
-    mirrorB.pos = new Vector(400, 100);
-    mirrorB.degrees = 90;
-
-    mirrorC.pos = new Vector(200, 100);
-    mirrorC.degrees = 70;
-
-    mirrorD.pos = new Vector(20, 100);
-    mirrorD.degrees = -20;
-
-    sensor.pos = new Vector(600, 400);
-    sensor.lockMovementX = true;
-    sensor.lockMovementY = true;
-
-    scene.addObject(pointer);
-    scene.addObject(mirrorA);
-    scene.addObject(mirrorB);
-    scene.addObject(mirrorC);
-    scene.addObject(mirrorD);
-    scene.addObject(sensor);
-
-    const rect = new TransparentObstacle(100, 240, "grey", 1.8);
-    rect.pos = new Vector(250, 300);
-    rect.degrees = 90;
-    scene.addObject(rect);
-
-    */
     const updateCallback = () => {
       scene.update();
     };

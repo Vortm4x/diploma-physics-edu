@@ -27,6 +27,7 @@ interface IActorProps {
   degrees: number;
   lockMovementX: boolean;
   lockMovementY: boolean;
+  lockRotation: boolean;
 }
 
 interface ISceneProps {
@@ -228,6 +229,7 @@ export default class Scene implements IRestorable {
         actor.degrees = actorProps.degrees;
         actor.lockMovementX = actorProps.lockMovementX;
         actor.lockMovementY = actorProps.lockMovementY;
+        actor.lockRotation = actorProps.lockRotation;
 
         scene.addObject(actor);
       }

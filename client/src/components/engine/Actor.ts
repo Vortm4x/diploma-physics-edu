@@ -123,4 +123,16 @@ export default class Actor extends SceneObject {
   set lockMovementY(lockMovementY: boolean) {
     this.fabricObject.lockMovementY = lockMovementY;
   }
+
+  get lockRotation(): boolean {
+    if (this.fabricObject.lockRotation === undefined) {
+      return false;
+    }
+
+    return this.fabricObject.lockRotation;
+  }
+
+  set lockRotation(lockRotation: boolean) {
+    this.fabricObject.lockRotation = lockRotation;
+  }
 }
