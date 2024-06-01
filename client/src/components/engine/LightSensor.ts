@@ -2,10 +2,21 @@ import Actor from "./Actor";
 import ISurface from "./ISurface";
 import Segment from "./Segment";
 import Vector from "./Vector";
+import { fabric } from "fabric";
 
 export default class LightSensor extends Actor implements ISurface {
+  public hasLight: boolean;
+
   constructor() {
-    super("sensor", 33);
+    const scale = 0.25;
+    const fabricObject = new fabric.Image("sensor");
+
+    fabricObject.scaleX = scale;
+    fabricObject.scaleY = scale;
+
+    super(fabricObject, 33);
+
+    this.hasLight = false;
   }
 
   get surface(): Segment {

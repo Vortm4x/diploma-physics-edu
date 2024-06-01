@@ -10,12 +10,19 @@ export default class Segment {
   }
 
   hasPoint(c: Vector): boolean {
-    const ab = this.begin.add(this.end).dist;
-    const ac = this.begin.add(c).dist;
-    const bc = this.end.add(c).dist;
+    const ac = new Segment(this.begin, c).dist;
+    const bc = new Segment(c, this.end).dist;
+    const ab = this.dist;
     const error = 0.00001;
 
-    return ab - (ac + bc) <= error;
+    return ac + bc - ab <= error;
+  }
+
+  projection(c: Vector): Vector {
+    const v0 = this.vector;
+    const vc = new Segment(this.begin, c).vector;
+
+    return v0.coef(v0.dot(vc) / v0.dot(v0)).add(this.begin);
   }
 
   get dist(): number {

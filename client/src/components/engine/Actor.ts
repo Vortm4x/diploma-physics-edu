@@ -3,34 +3,22 @@ import SceneObject from "./SceneObject";
 import Vector from "./Vector";
 
 export default class Actor extends SceneObject {
-  constructor(spriteId: string, borderInset: number) {
-    const scale = 0.25;
-    const fabricData = {
-      lockScalingX: true,
-      lockScalingY: true,
-      scaleX: scale,
-      scaleY: scale,
-      padding: -borderInset * scale,
-      borderColor: "red",
-      cornerColor: "green",
-      cornerSize: 6,
-      transparentCorners: false,
-      originX: "center",
-      originY: "center",
-    };
-    const controlsVisibility = {
-      mt: false,
-      mb: false,
-      ml: false,
-      mr: false,
-      tl: false,
-      tr: false,
-      bl: false,
-      br: false,
-    };
+  constructor(fabricObject: fabric.Object, borderInset: number) {
+    fabricObject.lockScalingX = true;
+    fabricObject.lockScalingY = true;
 
-    const fabricObject = new fabric.Image(spriteId, fabricData);
-    fabricObject.setControlsVisibility(controlsVisibility);
+    fabricObject.padding = -borderInset;
+
+    if (fabricObject.scaleX !== undefined) {
+      fabricObject.padding *= fabricObject.scaleX;
+    }
+
+    fabricObject.borderColor = "red";
+    fabricObject.cornerColor = "green";
+    fabricObject.cornerSize = 6;
+    fabricObject.transparentCorners = false;
+    fabricObject.originX = "center";
+    fabricObject.originY = "center";
 
     super(fabricObject);
   }

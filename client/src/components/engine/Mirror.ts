@@ -3,10 +3,17 @@ import IReflectableSurface from "./IReflectableSurface";
 import Ray from "./Ray";
 import Segment from "./Segment";
 import Vector from "./Vector";
+import { fabric } from "fabric";
 
 export default class Mirror extends Actor implements IReflectableSurface {
   constructor() {
-    super("mirror", 35);
+    const scale = 0.25;
+    const fabricObject = new fabric.Image("mirror");
+
+    fabricObject.scaleX = scale;
+    fabricObject.scaleY = scale;
+
+    super(fabricObject, 35);
   }
 
   get surface(): Segment {
@@ -16,6 +23,14 @@ export default class Mirror extends Actor implements IReflectableSurface {
   }
 
   reflection(ray: Ray): number {
-    return 0;
+    const surface = this.surface;
+    const dist = ray.dist(surface);
+    const dest = ray.end(dist);
+    const fall = new Segment(dest, ray.source).vector;
+
+    const proj = surface.projection(ray.source);
+    const norm = new Segment(ray.source, proj).vector;
+
+    return norm.angleTo(new Vector(1, 0)) + norm.angleTo(fall);
   }
 }
