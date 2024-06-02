@@ -40,6 +40,7 @@ export default {
                                     owner: scenario.owner,
                                     dateShared: Date.now(),
                                     data: scenario.data,
+                                    marks: [],
                                 }], { session: session });
                                 // sharedScenario[0].save({ session: session }); // not a model
                                 group.sharedScenarios.push(sharedScenario[0]._id);
@@ -54,6 +55,27 @@ export default {
             await session.endSession();
             console.log("\nShared scenario\n ", sharedScenario[0]);
             res.send({ scenario: sharedScenario[0] });
+        } catch (error) {
+            console.error("Error occured in shareScenario controller", error);
+            res.status(400).send({
+                error: "Probably wrong data"
+            });
+        }
+    },
+    async getSharedScenario(req: Request, res: Response): Promise<undefined> {
+        try {            
+            const scenarioId = req.body.id;
+            const sharedScenario = await db.SharedScenarioModel.findById(scenarioId);
+
+            if (!sharedScenario) {
+                res.status(400).send({
+                    error: "Probably wrong data"
+                });
+                return;
+            }
+            
+            // console.log("\nShared scenario\n ", sharedScenario);
+            res.send({ scenario: sharedScenario });
         } catch (error) {
             console.error("Error occured in shareScenario controller", error);
             res.status(400).send({
