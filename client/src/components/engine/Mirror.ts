@@ -35,10 +35,10 @@ export default class Mirror
     const proj = surface.projection(ray.source);
     const norm = new Segment(ray.source, proj).vector;
 
-    return norm.angleTo(new Vector(1, 0)) + norm.angleTo(fall);
+    return norm.angleTo(Vector.OX) + norm.angleTo(fall);
   }
 
-  export(): object {
+  get export(): object {
     return {
       type: "Mirror",
 

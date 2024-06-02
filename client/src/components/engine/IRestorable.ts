@@ -1,5 +1,5 @@
 export default interface IRestorable {
-  export(): object;
+  readonly export: object;
 }
 
 export const isRestorable = (obj: IRestorable): obj is IRestorable => {

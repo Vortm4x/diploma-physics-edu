@@ -7,7 +7,16 @@
       style="display: none"
     />
     <img id="mirror" src="../assets/mirror.png" style="display: none" />
-    <img id="sensor" src="../assets/sensor-fail.png" style="display: none" />
+    <img
+      id="sensor-inactive"
+      src="../assets/sensor-inactive.png"
+      style="display: none"
+    />
+    <img
+      id="sensor-active"
+      src="../assets/sensor-active.png"
+      style="display: none"
+    />
   </div>
 </template>
 
@@ -26,7 +35,14 @@ export default defineComponent({
   name: "EditingWorkspace",
 
   data() {
-    return scene.export();
+    return {
+      get export(): object {
+        return scene.export;
+      },
+      get score(): number {
+        return scene.score;
+      },
+    };
   },
 
   mounted() {
@@ -39,6 +55,14 @@ export default defineComponent({
           x: 250,
           y: 70,
           degrees: 70,
+          lockMovementX: false,
+          lockMovementY: false,
+        },
+        {
+          type: "LaserPointer",
+          x: 70,
+          y: 300,
+          degrees: 130,
           lockMovementX: false,
           lockMovementY: false,
         },
@@ -81,11 +105,20 @@ export default defineComponent({
           lockMovementX: false,
           lockMovementY: false,
         },
+        {
+          type: "LightSensor",
+          x: 450,
+          y: 250,
+          degrees: 60,
+          lockMovementX: false,
+          lockMovementY: false,
+        },
       ],
     });
 
     const updateCallback = () => {
       scene.update();
+      console.log(this.$data.score);
     };
 
     setInterval(updateCallback, 1000 / 60);

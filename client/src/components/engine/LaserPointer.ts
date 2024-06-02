@@ -39,7 +39,7 @@ export default class LaserPointer extends Actor implements IRestorable {
     this.laser.removeFromScene(canvas);
   }
 
-  export(): object {
+  get export(): object {
     return {
       type: "LaserPointer",
 

@@ -85,7 +85,7 @@ export default class Scene implements IRestorable {
     for (const obj of this.objects) {
       if (obj instanceof LightSensor) {
         const sensor = obj as LightSensor;
-        sensor.hasLight = false;
+        sensor.isTriggered = false;
       }
     }
 
@@ -122,7 +122,7 @@ export default class Scene implements IRestorable {
 
           if (fallSurface instanceof LightSensor) {
             const sensor = fallSurface as LightSensor;
-            sensor.hasLight = true;
+            sensor.isTriggered = true;
           }
         }
 
@@ -182,7 +182,23 @@ export default class Scene implements IRestorable {
     return nearestSurfaceObj;
   }
 
-  export(): object {
+  get score(): number {
+    let sceneScore = 0;
+
+    for (const sceneObj of this.objects) {
+      if (sceneObj instanceof LightSensor) {
+        const lightSensor = sceneObj as LightSensor;
+
+        if (lightSensor.isTriggered) {
+          sceneScore += 1;
+        }
+      }
+    }
+
+    return sceneScore;
+  }
+
+  get export(): object {
     const entries: object[] = [];
 
     for (const sceneObj of this.objects) {
@@ -191,7 +207,7 @@ export default class Scene implements IRestorable {
       if (isRestorable(obj as IRestorable)) {
         const restorableObj = obj as IRestorable;
 
-        entries.push(restorableObj.export());
+        entries.push(restorableObj.export);
       }
     }
 

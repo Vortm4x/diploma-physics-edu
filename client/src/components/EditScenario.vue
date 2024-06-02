@@ -18,9 +18,7 @@ export default defineComponent({
     EditingWorkspace,
   },
   data() {
-    return {
-      msg: "Welcome to Your Vue.js App",
-    };
+    return EditingWorkspace.data;
   },
 });
 </script>
