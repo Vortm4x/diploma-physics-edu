@@ -10,6 +10,16 @@ export default {
     }
   },
 
+  async getSharedScenario(token: string, id: string) {
+    try {
+      return (
+        await Api().post("/get_shared_scenario", { token: token, id: id })
+      ).data;
+    } catch (error) {
+      console.error("get_shared_scenario call returned an error ", error);
+    }
+  },
+
   async addScenario(token: string, name: string) {
     try {
       return (await Api().post("/add_scenario", { token: token, name: name }))

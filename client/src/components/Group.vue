@@ -62,7 +62,15 @@
                 ', date: ' +
                 new Date(sharedScenario.dateShared).toUTCString()
               "
-            ></v-list-item>
+              @click="navigateToSharedScenario(sharedScenario._id)"
+              ><v-btn
+                v-if="sharedScenario.owner === $store.state.email"
+                @click.stop="navigateToResults(sharedScenario._id)"
+                theme="light"
+                class="results-btn"
+                >To results</v-btn
+              ></v-list-item
+            >
           </v-list>
           <!-- <p>{{ sharedScenarios }}</p> -->
         </list-panel>
@@ -124,6 +132,12 @@ export default defineComponent({
         )
       );
     },
+    navigateToSharedScenario(id: string) {
+      this.$router.push({ name: "sharedScenario", params: { id: id } });
+    },
+    navigateToResults(id: string) {
+      this.$router.push({ name: "sharedScenarioResults", params: { id: id } });
+    },
   },
   async mounted() {
     console.log(this.$route.params.groupName);
@@ -157,5 +171,8 @@ export default defineComponent({
 .scenarios-column {
   margin-left: 10px;
   flex-grow: 2;
+}
+.results-btn {
+  margin-bottom: 5px;
 }
 </style>

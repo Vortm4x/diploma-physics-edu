@@ -5,6 +5,7 @@ import Login from "@/components/Login.vue";
 import GroupsBrowser from "@/components/GroupsBrowser.vue";
 import Group from "@/components/Group.vue";
 import ScenariosBrowser from "@/components/ScenariosBrowser.vue";
+import SharedScenarioResults from "@/components/SharedScenarioResults.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -42,6 +43,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/scenarios",
     name: "scenarios",
     component: ScenariosBrowser,
+  },
+  {
+    path: "/sharedScenarioResults:id",
+    name: "sharedScenarioResults",
+    component: SharedScenarioResults,
   },
 ];
 
