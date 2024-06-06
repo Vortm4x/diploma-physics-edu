@@ -2,6 +2,7 @@
   <div class="editing-workspace">
     <canvas id="editing-canvas"></canvas>
     <img
+      @load="createScene"
       id="laser-pointer"
       src="../assets/laser-pointer.png"
       style="display: none"
@@ -23,13 +24,9 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import Scene from "./engine/Scene";
-// import LaserPointer from "./engine/LaserPointer";
-// import Mirror from "./engine/Mirror";
-// import LightSensor from "./engine/LightSensor";
-// import Vector from "./engine/Vector";
-// import TransparentObstacle from "./engine/TransparentObstacle";
+import ScenariosService from "@/services/ScenariosService";
 
-let scene = new Scene(0, 0);
+let scene: any;
 
 export default defineComponent({
   name: "EditingWorkspace",
@@ -42,90 +39,94 @@ export default defineComponent({
       get score(): number {
         return scene.score;
       },
-      updateCallback: -1,
+      updateInterval: -1,
+      saveInterval: -1,
     };
+  },
+
+  methods: {
+    createScene() {
+      scene = new Scene(1, 1);
+    },
   },
 
   mounted() {
-    scene = Scene.restore({
-      width: 800,
-      height: 500,
-      entries: [
-        {
-          type: "LaserPointer",
-          x: 250,
-          y: 70,
-          degrees: 70,
-          lockMovementX: false,
-          lockMovementY: false,
-        },
-        {
-          type: "LaserPointer",
-          x: 70,
-          y: 300,
-          degrees: 130,
-          lockMovementX: false,
-          lockMovementY: false,
-        },
-        {
-          type: "Mirror",
-          x: 400,
-          y: 85,
-          degrees: -15,
-          lockMovementX: false,
-          lockMovementY: false,
-        },
-        {
-          type: "OpaqueObstacle",
-          x: 400,
-          y: 400,
-          degrees: -15,
-          lockMovementX: false,
-          lockMovementY: false,
-          width: 70,
-          height: 70,
-          color: "blue",
-        },
-        {
-          type: "TransparentObstacle",
-          x: 300,
-          y: 300,
-          degrees: 15,
-          lockMovementX: false,
-          lockMovementY: false,
-          width: 200,
-          height: 150,
-          color: "yellow",
-          refractionCoef: 1.5,
-        },
-        {
-          type: "LightSensor",
-          x: 250,
-          y: 450,
-          degrees: 15,
-          lockMovementX: false,
-          lockMovementY: false,
-        },
-        {
-          type: "LightSensor",
-          x: 450,
-          y: 250,
-          degrees: 60,
-          lockMovementX: false,
-          lockMovementY: false,
-        },
-      ],
-    });
+    setTimeout(async () => {
+      const sceneData = (
+        await ScenariosService.getScenario(
+          this.$store.state.token as string,
+          this.$route.params.id as string
+        )
+      ).data;
+      console.log(sceneData);
 
-    const updateCallback = () => {
-      scene.update();
-      console.log(this.$data.score);
-    };
+      if (sceneData !== undefined) {
+        scene = Scene.restore(JSON.parse(sceneData));
+      } else {
+        scene = Scene.restore({
+          width: 800,
+          height: 500,
+          entries: [
+            {
+              type: "LaserPointer",
+              x: 250,
+              y: 70,
+              degrees: 70,
+              lockMovementX: false,
+              lockMovementY: false,
+            },
+            {
+              type: "Mirror",
+              x: 400,
+              y: 85,
+              degrees: -15,
+              lockMovementX: false,
+              lockMovementY: false,
+            },
+            {
+              type: "TransparentObstacle",
+              x: 300,
+              y: 300,
+              degrees: 15,
+              lockMovementX: false,
+              lockMovementY: false,
+              width: 200,
+              height: 150,
+              color: "yellow",
+              refractionCoef: 1.5,
+            },
+            {
+              type: "LightSensor",
+              x: 250,
+              y: 450,
+              degrees: 15,
+              lockMovementX: false,
+              lockMovementY: false,
+            },
+          ],
+        });
+      }
 
-    this.$data.updateCallback = setInterval(updateCallback, 1000 / 60);
+      const updateCallback = () => {
+        scene.update();
+      };
+
+      const saveCallback = () => {
+        const exportJson = JSON.stringify(this.$data.export);
+        ScenariosService.saveScenario(
+          this.$store.state.token as string,
+          this.$route.params.id as string,
+          exportJson
+        );
+      };
+
+      this.$data.updateInterval = setInterval(updateCallback, 1000 / 60);
+      this.$data.saveInterval = setInterval(saveCallback, 1000 * 3);
+    }, 10);
   },
   unmounted() {
-    clearInterval(this.$data.updateCallback);
+    clearInterval(this.$data.updateInterval);
+    clearInterval(this.$data.saveInterval);
   },
 });
 </script>
@@ -133,6 +134,6 @@ export default defineComponent({
 <style scoped>
 .editing-workspace {
   height: 100%;
-  background-color: aqua;
+  /* background-color: aqua; */
 }
 </style>

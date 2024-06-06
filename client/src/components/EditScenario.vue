@@ -1,6 +1,6 @@
 <template>
   <div id="root">
-    <Header id="header"></Header>
+    <RegistrationHeader id="header"></RegistrationHeader>
     <!-- <h1>{{ msg }}</h1> -->
     <EditingWorkspace id="content"></EditingWorkspace>
   </div>
@@ -8,14 +8,14 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Header from "./Header.vue";
 import EditingWorkspace from "./EditingWorkspace.vue";
 import ScenariosService from "@/services/ScenariosService";
+import RegistrationHeader from "./RegistrationHeader.vue";
 
 export default defineComponent({
   name: "EditScenario",
   components: {
-    Header,
+    RegistrationHeader,
     EditingWorkspace,
   },
   data() {

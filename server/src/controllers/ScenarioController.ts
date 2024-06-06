@@ -50,4 +50,20 @@ export default {
             });
         }
     },
+    async saveScenario(req: Request, res: Response): Promise<undefined> {
+        try {
+            const decoded = jwt.verify(req.body.token, config.auth.jwtSecret);
+            const id = req.body.id;
+            const owner = (decoded as JwtPayload).email;
+            const scenario = await db.ScenarioModel.findOneAndUpdate({ owner: owner, _id: id }, { data: req.body.data });
+            console.log(scenario);
+            
+            res.status(200).send();
+        } catch (error) {
+            console.error("Error occured in saveScenario controller", error);
+            res.status(400).send({
+                error: "Probably wrong data"
+            });
+        }
+    },
 }

@@ -1,21 +1,20 @@
 <template>
   <div id="root">
-    <Header id="header"></Header>
-    <!-- <h1>{{ msg }}</h1> -->
+    <RegistrationHeader id="header"></RegistrationHeader>
     <EditingWorkspace id="content"></EditingWorkspace>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Header from "./Header.vue";
 import EditingWorkspace from "./EditingWorkspace.vue";
 import ScenariosService from "@/services/ScenariosService";
+import RegistrationHeader from "./RegistrationHeader.vue";
 
 export default defineComponent({
   name: "SolveScenario",
   components: {
-    Header,
+    RegistrationHeader,
     EditingWorkspace,
   },
   data() {

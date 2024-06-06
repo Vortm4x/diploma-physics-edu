@@ -38,6 +38,16 @@ export default {
     }
   },
 
+  async saveScenario(token: string, id: string, data: string) {
+    try {
+      return (
+        await Api().post("/save_scenario", { token: token, id: id, data: data })
+      ).data.scenario;
+    } catch (error) {
+      console.error("add_scenario call returned an error ", error);
+    }
+  },
+
   async shareScenario(
     token: string | null,
     groupName: string,

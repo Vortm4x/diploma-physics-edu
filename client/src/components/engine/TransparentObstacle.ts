@@ -47,7 +47,7 @@ export default class TransparentObstacle
 
   get export(): object {
     return {
-      type: "OpaqueObstacle",
+      type: "TransparentObstacle",
       width: this.width,
       height: this.height,
       color: this.color,

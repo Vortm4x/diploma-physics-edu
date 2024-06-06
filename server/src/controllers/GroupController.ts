@@ -64,7 +64,6 @@ export default {
 
     async getGroups(req: Request, res: Response): Promise<undefined> {
         try {
-            console.log("Incoming getgroups request", req.body);
             const decoded = jwt.verify(req.body.token, config.auth.jwtSecret);
             // const data = JSON.parse(decoded as string);
             const groups = await db.UserGroupModel.findOne({ email: (decoded as JwtPayload).email });

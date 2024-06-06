@@ -133,7 +133,7 @@ export default defineComponent({
       );
     },
     navigateToSharedScenario(id: string) {
-      this.$router.push({ name: "sharedScenario", params: { id: id } });
+      this.$router.push({ name: "solveScenario", params: { id: id } });
     },
     navigateToResults(id: string) {
       this.$router.push({ name: "sharedScenarioResults", params: { id: id } });

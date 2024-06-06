@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const ScenarioSchema = new Schema({
   owner: { type: String },
   name: { type: String },
-  data: { type: Map },
+  data: { type: String },
 });
 
 
