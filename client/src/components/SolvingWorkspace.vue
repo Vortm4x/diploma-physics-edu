@@ -18,7 +18,7 @@
       src="../assets/sensor-active.png"
       style="display: none"
     />
-    <v-btn class="mr-4" @click="saveScene">Save</v-btn>
+    <v-btn class="mr-4" @click="shareResult">Share result</v-btn>
     <v-btn class="mr-4">Add laser</v-btn>
     <v-btn class="mr-4">Add sensor</v-btn>
     <v-btn class="mr-4">Add mirror</v-btn>
@@ -32,12 +32,11 @@ import ScenariosService from "@/services/ScenariosService";
 
 let scene: any;
 
-const saveScene = (component: any) => {
-  const exportJson = JSON.stringify(component.$data.export);
-  ScenariosService.saveScenario(
+const shareResult = (component: any) => {
+  ScenariosService.updateMark(
     component.$store.state.token as string,
     component.$route.params.id as string,
-    exportJson
+    component.$data.score
   );
 };
 
@@ -61,19 +60,18 @@ export default defineComponent({
     createScene() {
       scene = new Scene(1, 1);
     },
-    saveScene() {
-      saveScene(this);
+    shareResult() {
+      shareResult(this);
     },
   },
 
   mounted() {
     setTimeout(async () => {
-      const sceneData = (
-        await ScenariosService.getScenario(
-          this.$store.state.token as string,
-          this.$route.params.id as string
-        )
-      ).data;
+      const scenario = await ScenariosService.getSharedScenario(
+        this.$store.state.token as string,
+        this.$route.params.id as string
+      );
+      const sceneData = scenario.scenario.data;
       console.log(sceneData);
 
       if (sceneData !== undefined) {
@@ -128,12 +126,10 @@ export default defineComponent({
       };
 
       this.$data.updateInterval = setInterval(updateCallback, 1000 / 60);
-      this.$data.saveInterval = setInterval(saveScene, 1000 * 30, this);
     }, 10);
   },
   unmounted() {
     clearInterval(this.$data.updateInterval);
-    clearInterval(this.$data.saveInterval);
   },
 });
 </script>

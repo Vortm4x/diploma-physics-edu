@@ -6,7 +6,7 @@ const SharedScenarioSchema = new Schema({
   owner: { type: String },
   name: { type: String },
   dateShared: { type: Date },
-  data: { type: Map },
+  data: { type: String },
   marks: { type: Map },
 });
 

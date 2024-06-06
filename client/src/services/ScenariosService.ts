@@ -44,7 +44,17 @@ export default {
         await Api().post("/save_scenario", { token: token, id: id, data: data })
       ).data.scenario;
     } catch (error) {
-      console.error("add_scenario call returned an error ", error);
+      console.error("save_scenario call returned an error ", error);
+    }
+  },
+
+  async updateMark(token: string, id: string, mark: string) {
+    try {
+      return (
+        await Api().post("/update_mark", { token: token, id: id, mark: mark })
+      ).data;
+    } catch (error) {
+      console.error("update_mark call returned an error ", error);
     }
   },
 

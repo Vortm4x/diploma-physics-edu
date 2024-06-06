@@ -5,20 +5,37 @@ import jwt, { JwtPayload } from "jsonwebtoken"
 import { ClientSession } from 'mongoose'
 
 export default {
-    async updateMark(/*req: Request, res: Response*/): Promise<undefined> {
-        // try {
-        //     const decoded = jwt.verify(req.body.token, config.auth.jwtSecret);
-        //     const scenarios = await db.ScenarioModel.find({ owner: (decoded as JwtPayload).email });
-        //     console.log(scenarios);
-        //     res.send({
-        //         scenarios: scenarios,
-        //     });
-        // } catch (error) {
-        //     console.error("Error occured in updateMark controller", error);
-        //     res.status(400).send({
-        //         error: "Probably empty jwt token"
-        //     });
-        // }
+    async updateMark(req: Request, res: Response): Promise<undefined> {
+        let session: ClientSession;
+        try {
+            const decoded = jwt.verify(req.body.token, config.auth.jwtSecret);
+            await db.SharedScenarioModel.startSession().then(async _session => {
+                    session = _session;
+                    return session.withTransaction(() => {
+                        return (async () => {
+                            try {
+                                const sharedScenario = await db.SharedScenarioModel.findById(req.body.id).session(session);
+                                const emailNoDots = ((decoded as jwt.JwtPayload).email as string).replace('.', '');
+                                const previousResult = sharedScenario.marks.get(emailNoDots);
+                                const newResult = (previousResult as number) > req.body.mark ? previousResult : req.body.mark;
+                                sharedScenario.marks.set(emailNoDots, newResult);
+                                await sharedScenario.save({ session: session, checkKeys: false });
+                            } catch (error) {
+                                console.error("Error occurred in updateMark controller in transaction", error);
+                            }
+                        })();
+                    })
+                }
+            );
+            res.status(200).send();
+        } catch (error) {
+            console.error("Error occured in updateMark controller", error);
+            res.status(400).send({
+                error: "Probably empty jwt token"
+            });
+        } finally {
+            await session.endSession();
+        }
     },
     async shareScenario(req: Request, res: Response): Promise<undefined> {
         try {
