@@ -41,7 +41,7 @@
       <v-list lines="one">
         <v-list-item
           v-for="(scenario, index) in scenarios"
-          @click="navigateToScenario(scenario.name)"
+          @click="navigateToScenario(scenario._id)"
           :key="index"
           :title="scenario.name"
           :subtitle="scenario.owner"
@@ -138,10 +138,10 @@ export default defineComponent({
         })
         .then(() => setTimeout(() => getScenarios(this), 3000));
     },
-    navigateToScenario(scenarioName: string) {
+    navigateToScenario(id: string) {
       this.$router.push({
-        name: "scenario",
-        params: { scenarioName: scenarioName },
+        name: "EditScenario",
+        params: { id: id },
       });
     },
     async shareScenario(scenarioName: string) {

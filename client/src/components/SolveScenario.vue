@@ -13,19 +13,19 @@ import EditingWorkspace from "./EditingWorkspace.vue";
 import ScenariosService from "@/services/ScenariosService";
 
 export default defineComponent({
-  name: "EditScenario",
+  name: "SolveScenario",
   components: {
     Header,
     EditingWorkspace,
   },
   data() {
     return {
-      scenario: {},
+      sharedScenario: { data: new Map() },
     };
   },
   async mounted() {
-    this.$data.scenario = (
-      await ScenariosService.getScenario(
+    this.$data.sharedScenario = (
+      await ScenariosService.getSharedScenario(
         this.$store.state.token as string,
         this.$route.params.id as string
       )

@@ -18,6 +18,22 @@ export default {
             });
         }
     },
+    async getScenario(req: Request, res: Response): Promise<undefined> {
+        try {
+            // const decoded = jwt.verify(req.body.token, config.auth.jwtSecret);
+            // TODO: check ownership
+            const scenario = await db.ScenarioModel.findById(req.body.id);
+            console.log(scenario);
+            res.send({
+                scenario: scenario,
+            });
+        } catch (error) {
+            console.error("Error occured in getScenarios controller", error);
+            res.status(400).send({
+                error: "Probably empty jwt token"
+            });
+        }
+    },
     async addScenario(req: Request, res: Response): Promise<undefined> {
         try {
             const decoded = jwt.verify(req.body.token, config.auth.jwtSecret);

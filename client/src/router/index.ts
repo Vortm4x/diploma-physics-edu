@@ -6,6 +6,7 @@ import GroupsBrowser from "@/components/GroupsBrowser.vue";
 import Group from "@/components/Group.vue";
 import ScenariosBrowser from "@/components/ScenariosBrowser.vue";
 import SharedScenarioResults from "@/components/SharedScenarioResults.vue";
+import SolveScenario from "@/components/SolveScenario.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -14,7 +15,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Register,
   },
   {
-    path: "/EditScenario",
+    path: "/EditScenario:id",
     name: "EditScenario",
     component: EditScenario,
   },
@@ -48,6 +49,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/sharedScenarioResults:id",
     name: "sharedScenarioResults",
     component: SharedScenarioResults,
+  },
+  {
+    path: "/solveScenario:id",
+    name: "solveScenario",
+    component: SolveScenario,
   },
 ];
 
