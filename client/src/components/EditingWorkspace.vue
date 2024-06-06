@@ -42,6 +42,7 @@ export default defineComponent({
       get score(): number {
         return scene.score;
       },
+      updateCallback: -1,
     };
   },
 
@@ -121,7 +122,10 @@ export default defineComponent({
       console.log(this.$data.score);
     };
 
-    setInterval(updateCallback, 1000 / 60);
+    this.$data.updateCallback = setInterval(updateCallback, 1000 / 60);
+  },
+  unmounted() {
+    clearInterval(this.$data.updateCallback);
   },
 });
 </script>
