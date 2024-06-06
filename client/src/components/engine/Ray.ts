@@ -4,10 +4,17 @@ import Vector from "./Vector";
 export default class Ray {
   public readonly source: Vector;
   public readonly direction: number;
+  public readonly isRefracted: boolean;
 
-  constructor(source: Vector, direction: number) {
+  constructor(source: Vector, direction: number, isRefracted?: boolean) {
     this.source = source;
     this.direction = direction;
+
+    if (isRefracted !== undefined) {
+      this.isRefracted = isRefracted;
+    } else {
+      this.isRefracted = false;
+    }
   }
 
   dist(segment: Segment) {
@@ -15,19 +22,17 @@ export default class Ray {
     const sinA = Math.sin(this.direction);
 
     const v0 = segment.vector;
-    const vc = new Segment(this.source, segment.begin).vector;
+    const vc = new Segment(segment.begin, this.source).vector;
 
-    const d = (vc.x / v0.x - vc.y / v0.y) / (sinA / v0.y - cosA / v0.x);
+    const d = (vc.x * v0.y - vc.y * v0.x) / (sinA * v0.x - cosA * v0.y);
 
     return d;
   }
 
   end(dist: number) {
-    return this.source.add(
-      new Vector(
-        dist * Math.cos(this.direction),
-        dist * Math.sin(this.direction)
-      )
-    );
+    const cosA = Math.cos(this.direction);
+    const sinA = Math.sin(this.direction);
+
+    return this.source.add(new Vector(dist * cosA, dist * sinA));
   }
 }
