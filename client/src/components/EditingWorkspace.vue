@@ -19,9 +19,9 @@
       style="display: none"
     />
     <v-btn class="mr-4" @click="saveScene">Save</v-btn>
-    <v-btn class="mr-4">Add laser</v-btn>
-    <v-btn class="mr-4">Add sensor</v-btn>
-    <v-btn class="mr-4">Add mirror</v-btn>
+    <v-btn class="mr-4" @click="addLaser">Add laser</v-btn>
+    <v-btn class="mr-4" @click="addSensor">Add sensor</v-btn>
+    <v-btn class="mr-4" @click="addMirror">Add mirror</v-btn>
   </div>
 </template>
 
@@ -29,6 +29,11 @@
 import { defineComponent } from "vue";
 import Scene from "./engine/Scene";
 import ScenariosService from "@/services/ScenariosService";
+import LightSensor from "./engine/LightSensor";
+import LaserPointer from "./engine/LaserPointer";
+import Mirror from "./engine/Mirror";
+import Actor from "./engine/Actor";
+import Vector from "./engine/Vector";
 
 let scene: any;
 
@@ -61,6 +66,38 @@ export default defineComponent({
     createScene() {
       scene = new Scene(1, 1);
     },
+    getActorRandPos(actor: Actor): Vector {
+      const maxDim = Math.max(actor.width, actor.height);
+
+      return new Vector(
+        Math.random() * (scene.width - 2 * maxDim) + maxDim,
+        Math.random() * (scene.height - 2 * maxDim) + maxDim
+      );
+    },
+    addLaser() {
+      const laser = new LaserPointer();
+
+      laser.pos = this.getActorRandPos(laser);
+      laser.degrees = Math.random() * 360;
+
+      (scene as Scene).addObject(laser);
+    },
+    addSensor() {
+      const sensor = new LightSensor();
+
+      sensor.pos = this.getActorRandPos(sensor);
+      sensor.degrees = Math.random() * 360;
+
+      (scene as Scene).addObject(sensor);
+    },
+    addMirror() {
+      const mirror = new Mirror();
+
+      mirror.pos = this.getActorRandPos(mirror);
+      mirror.degrees = Math.random() * 360;
+
+      (scene as Scene).addObject(mirror);
+    },
     saveScene() {
       saveScene(this);
     },
@@ -68,6 +105,7 @@ export default defineComponent({
 
   mounted() {
     setTimeout(async () => {
+      // const sceneData = undefined;
       const sceneData = (
         await ScenariosService.getScenario(
           this.$store.state.token as string,
@@ -79,48 +117,7 @@ export default defineComponent({
       if (sceneData !== undefined) {
         scene = Scene.restore(JSON.parse(sceneData));
       } else {
-        scene = Scene.restore({
-          width: 800,
-          height: 500,
-          entries: [
-            {
-              type: "LaserPointer",
-              x: 250,
-              y: 70,
-              degrees: 70,
-              lockMovementX: false,
-              lockMovementY: false,
-            },
-            {
-              type: "Mirror",
-              x: 400,
-              y: 85,
-              degrees: -15,
-              lockMovementX: false,
-              lockMovementY: false,
-            },
-            {
-              type: "TransparentObstacle",
-              x: 300,
-              y: 300,
-              degrees: 15,
-              lockMovementX: false,
-              lockMovementY: false,
-              width: 200,
-              height: 150,
-              color: "yellow",
-              refractionCoef: 1.5,
-            },
-            {
-              type: "LightSensor",
-              x: 250,
-              y: 450,
-              degrees: 15,
-              lockMovementX: false,
-              lockMovementY: false,
-            },
-          ],
-        });
+        scene = new Scene(800, 500);
       }
 
       const updateCallback = () => {
