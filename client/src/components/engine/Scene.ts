@@ -68,8 +68,72 @@ export default class Scene implements IRestorable {
     return this.canvas.height;
   }
 
-  addObject(object: SceneObject): void {
+  addObject(object: SceneObject, deletable?: boolean): void {
     object.addToScene(this.canvas);
+
+    if (deletable) {
+      if (object instanceof Actor) {
+        const actor = object as Actor;
+
+        const delControlRender = (
+          ctx: CanvasRenderingContext2D,
+          left: number,
+          top: number,
+          _styleOverride: any,
+          fabricObject: fabric.Object
+        ) => {
+          const size = 16;
+          const elem = document.getElementById("delete-control");
+          const img = elem as HTMLImageElement;
+
+          ctx.save();
+          ctx.translate(left, top);
+          ctx.rotate(
+            fabric.util.degreesToRadians(
+              fabricObject.angle ? fabricObject.angle : 0
+            )
+          );
+          ctx.drawImage(img, -size / 2, -size / 2, size, size);
+          ctx.restore();
+        };
+
+        const delControlAction = (
+          _eventData: MouseEvent,
+          transform: fabric.Transform
+        ): boolean => {
+          const obj = transform.target;
+          if (obj === undefined) {
+            return false;
+          }
+
+          const canvas = obj.canvas;
+          if (canvas === undefined) {
+            return false;
+          }
+
+          const deletableObj = this.getSceneActorByFabricObj(obj);
+
+          if (deletableObj !== null) {
+            this.removeObject(deletableObj);
+          }
+
+          return true;
+        };
+
+        const delControlData = {
+          sizeX: 16,
+          sizeY: 16,
+          x: 0.5,
+          y: -0.5,
+          offsetY: -8,
+          offsetX: 8,
+          render: delControlRender,
+          mouseUpHandler: delControlAction,
+        };
+
+        actor.deleteControl = new fabric.Control(delControlData);
+      }
+    }
 
     this.objects.push(object);
   }
@@ -79,6 +143,21 @@ export default class Scene implements IRestorable {
 
     const index = this.objects.indexOf(object);
     this.objects.splice(index, 1);
+    console.log(index);
+  }
+
+  private getSceneActorByFabricObj(fabricObject: fabric.Object): Actor | null {
+    for (const obj of this.objects) {
+      if (obj instanceof Actor) {
+        const actor = obj as Actor;
+
+        if (actor.isFabricObject(fabricObject)) {
+          return actor;
+        }
+      }
+    }
+
+    return null;
   }
 
   update(): void {

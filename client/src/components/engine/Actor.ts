@@ -23,6 +23,10 @@ export default class Actor extends SceneObject {
     super(fabricObject);
   }
 
+  set deleteControl(deleteControl: fabric.Control) {
+    this.fabricObject.controls["deleteControl"] = deleteControl;
+  }
+
   get x(): number {
     if (this.fabricObject.left === undefined) {
       return NaN;
@@ -134,5 +138,9 @@ export default class Actor extends SceneObject {
 
   set lockRotation(lockRotation: boolean) {
     this.fabricObject.lockRotation = lockRotation;
+  }
+
+  isFabricObject(fabricObject: fabric.Object): boolean {
+    return this.fabricObject === fabricObject;
   }
 }

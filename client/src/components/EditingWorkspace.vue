@@ -18,6 +18,12 @@
       src="../assets/sensor-active.png"
       style="display: none"
     />
+    <img
+      id="delete-control"
+      src="../assets/delete-control.png"
+      style="display: none"
+    />
+
     <v-btn class="mr-4" @click="saveScene">Save</v-btn>
     <v-btn class="mr-4" @click="addLaser">Add laser</v-btn>
     <v-btn class="mr-4" @click="addSensor">Add sensor</v-btn>
@@ -80,7 +86,7 @@ export default defineComponent({
       laser.pos = this.getActorRandPos(laser);
       laser.degrees = Math.random() * 360;
 
-      (scene as Scene).addObject(laser);
+      (scene as Scene).addObject(laser, true);
     },
     addSensor() {
       const sensor = new LightSensor();
@@ -88,7 +94,7 @@ export default defineComponent({
       sensor.pos = this.getActorRandPos(sensor);
       sensor.degrees = Math.random() * 360;
 
-      (scene as Scene).addObject(sensor);
+      (scene as Scene).addObject(sensor, true);
     },
     addMirror() {
       const mirror = new Mirror();
@@ -96,7 +102,7 @@ export default defineComponent({
       mirror.pos = this.getActorRandPos(mirror);
       mirror.degrees = Math.random() * 360;
 
-      (scene as Scene).addObject(mirror);
+      (scene as Scene).addObject(mirror, true);
     },
     saveScene() {
       saveScene(this);
