@@ -1,3 +1,4 @@
+import { fabric } from "fabric";
 import Boundary from "./Boundary";
 import IRestorable from "./IRestorable";
 import ISurface from "./ISurface";
@@ -12,7 +13,12 @@ interface IOpaqueObstacleProps {
 
 export default class OpaqueObstacle extends Obstacle implements IRestorable {
   constructor(width: number, height: number, color: string) {
-    super(width, height, color, 1);
+    const fabricObject = new fabric.Rect();
+    fabricObject.stroke = "black";
+    fabricObject.strokeWidth = 2;
+    fabricObject.strokeUniform = true;
+
+    super(fabricObject, width, height, color);
   }
 
   get surfaces(): ISurface[] {

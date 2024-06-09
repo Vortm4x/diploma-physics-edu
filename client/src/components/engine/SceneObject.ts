@@ -4,6 +4,9 @@ export default abstract class SceneObject {
   protected fabricObject: fabric.Object;
 
   constructor(fabricObject: fabric.Object) {
+    fabricObject.lockScalingX = true;
+    fabricObject.lockScalingY = true;
+
     const controlsVisibility = {
       mt: false,
       mb: false,

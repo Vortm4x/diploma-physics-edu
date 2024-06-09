@@ -1,3 +1,4 @@
+import { fabric } from "fabric";
 import IRestorable from "./IRestorable";
 import ISurface from "./ISurface";
 import Obstacle from "./Obstacle";
@@ -23,7 +24,11 @@ export default class TransparentObstacle
     color: string,
     refractionCoef: number
   ) {
-    super(width, height, color, 0.5);
+    const fabricObject = new fabric.Rect();
+    fabricObject.opacity = 0.35;
+
+    super(fabricObject, width, height, color);
+
     this.refractionCoef = refractionCoef;
   }
 

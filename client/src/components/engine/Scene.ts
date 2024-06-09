@@ -72,6 +72,27 @@ export default class Scene implements IRestorable {
     object.addToScene(this.canvas);
 
     if (deletable) {
+      const controlRender = (
+        ctx: CanvasRenderingContext2D,
+        left: number,
+        top: number,
+        _styleOverride: any,
+        fabricObject: fabric.Object,
+        img: HTMLImageElement
+      ) => {
+        const size = 16;
+
+        ctx.save();
+        ctx.translate(left, top);
+        ctx.rotate(
+          fabric.util.degreesToRadians(
+            fabricObject.angle ? fabricObject.angle : 0
+          )
+        );
+        ctx.drawImage(img, -size / 2, -size / 2, size, size);
+        ctx.restore();
+      };
+
       if (object instanceof Actor) {
         const actor = object as Actor;
 
@@ -79,22 +100,13 @@ export default class Scene implements IRestorable {
           ctx: CanvasRenderingContext2D,
           left: number,
           top: number,
-          _styleOverride: any,
+          styleOverride: any,
           fabricObject: fabric.Object
         ) => {
-          const size = 16;
           const elem = document.getElementById("delete-control");
           const img = elem as HTMLImageElement;
 
-          ctx.save();
-          ctx.translate(left, top);
-          ctx.rotate(
-            fabric.util.degreesToRadians(
-              fabricObject.angle ? fabricObject.angle : 0
-            )
-          );
-          ctx.drawImage(img, -size / 2, -size / 2, size, size);
-          ctx.restore();
+          controlRender(ctx, left, top, styleOverride, fabricObject, img);
         };
 
         const delControlAction = (
@@ -121,17 +133,108 @@ export default class Scene implements IRestorable {
         };
 
         const delControlData = {
-          sizeX: 16,
-          sizeY: 16,
+          sizeX: 24,
+          sizeY: 24,
           x: 0.5,
           y: -0.5,
+          offsetX: 16,
           offsetY: -8,
-          offsetX: 8,
+          cursorStyle: "pointer",
           render: delControlRender,
           mouseUpHandler: delControlAction,
         };
 
         actor.deleteControl = new fabric.Control(delControlData);
+
+        const moveXControlRender = (
+          ctx: CanvasRenderingContext2D,
+          left: number,
+          top: number,
+          styleOverride: any,
+          fabricObject: fabric.Object
+        ) => {
+          const elem = document.getElementById(
+            fabricObject.lockMovementX
+              ? "move-x-deny-control"
+              : "move-x-allow-control"
+          );
+          const img = elem as HTMLImageElement;
+
+          controlRender(ctx, left, top, styleOverride, fabricObject, img);
+        };
+
+        const moveXControlAction = (
+          _eventData: MouseEvent,
+          transform: fabric.Transform
+        ): boolean => {
+          const obj = transform.target;
+          if (obj === undefined) {
+            return false;
+          }
+
+          obj.lockMovementX = !obj.lockMovementX;
+
+          return true;
+        };
+
+        const moveXControlData = {
+          sizeX: 24,
+          sizeY: 24,
+          x: 0.5,
+          y: -0.5,
+          offsetX: 16,
+          offsetY: 8,
+          cursorStyle: "pointer",
+          render: moveXControlRender,
+          mouseDownHandler: moveXControlAction,
+        };
+
+        actor.moveXControl = new fabric.Control(moveXControlData);
+
+        const moveYControlRender = (
+          ctx: CanvasRenderingContext2D,
+          left: number,
+          top: number,
+          styleOverride: any,
+          fabricObject: fabric.Object
+        ) => {
+          const elem = document.getElementById(
+            fabricObject.lockMovementY
+              ? "move-y-deny-control"
+              : "move-y-allow-control"
+          );
+          const img = elem as HTMLImageElement;
+
+          controlRender(ctx, left, top, styleOverride, fabricObject, img);
+        };
+
+        const moveYControlAction = (
+          _eventData: MouseEvent,
+          transform: fabric.Transform
+        ): boolean => {
+          const obj = transform.target;
+          if (obj === undefined) {
+            return false;
+          }
+
+          obj.lockMovementY = !obj.lockMovementY;
+
+          return true;
+        };
+
+        const moveYControlData = {
+          sizeX: 24,
+          sizeY: 24,
+          x: 0.5,
+          y: -0.5,
+          offsetX: 16,
+          offsetY: 24,
+          cursorStyle: "pointer",
+          render: moveYControlRender,
+          mouseDownHandler: moveYControlAction,
+        };
+
+        actor.moveYControl = new fabric.Control(moveYControlData);
       }
     }
 

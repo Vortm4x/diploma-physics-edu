@@ -23,11 +23,33 @@
       src="../assets/delete-control.png"
       style="display: none"
     />
+    <img
+      id="move-x-allow-control"
+      src="../assets/move-x-allow-control.png"
+      style="display: none"
+    />
+    <img
+      id="move-x-deny-control"
+      src="../assets/move-x-deny-control.png"
+      style="display: none"
+    />
+    <img
+      id="move-y-allow-control"
+      src="../assets/move-y-allow-control.png"
+      style="display: none"
+    />
+    <img
+      id="move-y-deny-control"
+      src="../assets/move-y-deny-control.png"
+      style="display: none"
+    />
 
     <v-btn class="mr-4" @click="saveScene">Save</v-btn>
     <v-btn class="mr-4" @click="addLaser">Add laser</v-btn>
     <v-btn class="mr-4" @click="addSensor">Add sensor</v-btn>
     <v-btn class="mr-4" @click="addMirror">Add mirror</v-btn>
+    <v-btn class="mr-4" @click="addBrick">Add brick</v-btn>
+    <v-btn class="mr-4" @click="addGlass">Add glass</v-btn>
   </div>
 </template>
 
@@ -38,6 +60,8 @@ import ScenariosService from "@/services/ScenariosService";
 import LightSensor from "./engine/LightSensor";
 import LaserPointer from "./engine/LaserPointer";
 import Mirror from "./engine/Mirror";
+import OpaqueObstacle from "./engine/OpaqueObstacle";
+import TransparentObstacle from "./engine/TransparentObstacle";
 import Actor from "./engine/Actor";
 import Vector from "./engine/Vector";
 
@@ -103,6 +127,24 @@ export default defineComponent({
       mirror.degrees = Math.random() * 360;
 
       (scene as Scene).addObject(mirror, true);
+    },
+    addBrick() {
+      const brick = new OpaqueObstacle(50, 50, "orange");
+
+      brick.pos = this.getActorRandPos(brick);
+      brick.degrees = Math.random() * 360;
+      brick.resizeControlsEnabled = true;
+
+      (scene as Scene).addObject(brick, true);
+    },
+    addGlass() {
+      const glass = new TransparentObstacle(100, 20, "blue", 1.666);
+
+      glass.pos = this.getActorRandPos(glass);
+      glass.degrees = Math.random() * 360;
+      glass.resizeControlsEnabled = true;
+
+      (scene as Scene).addObject(glass, true);
     },
     saveScene() {
       saveScene(this);

@@ -4,9 +4,6 @@ import Vector from "./Vector";
 
 export default class Actor extends SceneObject {
   constructor(fabricObject: fabric.Object, borderInset: number) {
-    fabricObject.lockScalingX = true;
-    fabricObject.lockScalingY = true;
-
     fabricObject.padding = -borderInset;
 
     if (fabricObject.scaleX !== undefined) {
@@ -25,6 +22,14 @@ export default class Actor extends SceneObject {
 
   set deleteControl(deleteControl: fabric.Control) {
     this.fabricObject.controls["deleteControl"] = deleteControl;
+  }
+
+  set moveXControl(moveXControl: fabric.Control) {
+    this.fabricObject.controls["moveXControl"] = moveXControl;
+  }
+
+  set moveYControl(moveYControl: fabric.Control) {
+    this.fabricObject.controls["moveYControl"] = moveYControl;
   }
 
   get x(): number {

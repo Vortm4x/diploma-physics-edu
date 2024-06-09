@@ -6,15 +6,35 @@ export default abstract class Obstacle extends Actor {
   abstract surfaces: ISurface[];
   readonly color: string;
 
-  constructor(width: number, height: number, color: string, opacity: number) {
-    const fabricObject = new fabric.Rect();
+  constructor(
+    fabricObject: fabric.Object,
+    width: number,
+    height: number,
+    color: string
+  ) {
     fabricObject.width = width;
     fabricObject.height = height;
     fabricObject.fill = color;
-    fabricObject.opacity = opacity;
 
     super(fabricObject, 0);
 
     this.color = color;
+  }
+
+  set resizeControlsEnabled(isEnabled: boolean) {
+    const controlsVisibility = {
+      mt: isEnabled,
+      mb: isEnabled,
+      ml: isEnabled,
+      mr: isEnabled,
+      tl: isEnabled,
+      tr: isEnabled,
+      bl: isEnabled,
+      br: isEnabled,
+    };
+
+    this.fabricObject.lockScalingX = !isEnabled;
+    this.fabricObject.lockScalingY = !isEnabled;
+    this.fabricObject.setControlsVisibility(controlsVisibility);
   }
 }
