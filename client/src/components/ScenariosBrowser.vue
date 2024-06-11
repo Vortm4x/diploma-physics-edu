@@ -1,25 +1,25 @@
 <template>
   <registration-header />
   <div class="container">
-    <list-panel title="Scenarios" class="panel">
+    <list-panel title="Tasks" class="panel">
       <v-dialog max-width="500">
         <template v-slot:activator="{ props: activatorProps }">
           <v-btn
             v-bind="activatorProps"
             color="surface-variant"
-            text="Create scenario"
+            text="Create task"
             variant="flat"
           ></v-btn>
         </template>
 
         <template v-slot:default="{ isActive }">
-          <v-card title="Dialog">
-            <v-card-text>Specify a name to create a scenario.</v-card-text>
+          <v-card title="Create task">
+            <v-card-text>Specify a name to create a task.</v-card-text>
             <v-text-field
-              label="Scenario name"
+              label="Task name"
               variant="outlined"
               name="scenarioName"
-              placeholder="Scenario name"
+              placeholder="Task name"
               v-model="scenarioName"
             ></v-text-field>
 
@@ -31,7 +31,7 @@
                   isActive.value = false;
                 "
                 class="pr-4"
-                >Create Scenario</v-btn
+                >Create Task</v-btn
               >
               <v-btn text="Close" @click="isActive.value = false"></v-btn>
             </v-card-actions>
@@ -57,10 +57,8 @@
             </template>
 
             <template v-slot:default="{ isActive }">
-              <v-card title="Dialog">
-                <v-card-text
-                  >Choose a group to share the scenario in</v-card-text
-                >
+              <v-card title="Share task">
+                <v-card-text>Choose a group to share the task in</v-card-text>
                 <v-select
                   v-model="groupName"
                   label="Group"

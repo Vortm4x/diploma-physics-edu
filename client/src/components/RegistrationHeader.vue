@@ -5,10 +5,10 @@
       <v-btn
         v-if="$store.state.isUserLoggedIn"
         @click="navigateTo('EditScenario')"
-        >Edit Scenario</v-btn
+        >Edit Task</v-btn
       >
       <v-btn v-if="$store.state.isUserLoggedIn" @click="navigateTo('scenarios')"
-        >Scenarios</v-btn
+        >Tasks</v-btn
       >
       <v-btn v-if="$store.state.isUserLoggedIn" @click="navigateTo('groups')"
         >Groups</v-btn
