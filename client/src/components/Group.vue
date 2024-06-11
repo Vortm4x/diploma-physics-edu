@@ -51,7 +51,7 @@
             ></v-list-item>
           </v-list>
         </list-panel>
-        <list-panel title="Scenarios" class="scenarios-column">
+        <list-panel title="Tasks" class="scenarios-column">
           <v-list lines="one">
             <v-list-item
               v-for="(sharedScenario, index) in sharedScenarios"
