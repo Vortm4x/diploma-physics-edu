@@ -20,8 +20,8 @@ export default class Actor extends SceneObject {
     super(fabricObject);
   }
 
-  set deleteControl(deleteControl: fabric.Control) {
-    this.fabricObject.controls["deleteControl"] = deleteControl;
+  set deleteControl(deleteControl: fabric.Control | null) {
+    this.fabricObject.controls["deleteControl"]. = undefined;
   }
 
   set moveXControl(moveXControl: fabric.Control) {
@@ -34,6 +34,10 @@ export default class Actor extends SceneObject {
 
   set rotateControl(rotateControl: fabric.Control) {
     this.fabricObject.controls["rotateControl"] = rotateControl;
+  }
+
+  resetControls(): void {
+    this.fabricObject.controls = {};
   }
 
   get x(): number {
