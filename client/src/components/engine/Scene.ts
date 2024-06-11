@@ -235,6 +235,55 @@ export default class Scene implements IRestorable {
         };
 
         actor.moveYControl = new fabric.Control(moveYControlData);
+
+        const rotateControlRender = (
+          ctx: CanvasRenderingContext2D,
+          left: number,
+          top: number,
+          styleOverride: any,
+          fabricObject: fabric.Object
+        ) => {
+          const elem = document.getElementById(
+            fabricObject.lockRotation
+              ? "rotate-deny-control"
+              : "rotate-allow-control"
+          );
+          const img = elem as HTMLImageElement;
+
+          controlRender(ctx, left, top, styleOverride, fabricObject, img);
+        };
+
+        const rotateControlAction = (
+          _eventData: MouseEvent,
+          transform: fabric.Transform
+        ): boolean => {
+          const obj = transform.target;
+          if (obj === undefined) {
+            return false;
+          }
+
+          const actor = this.getSceneActorByFabricObj(obj);
+
+          if (actor !== null) {
+            actor.lockRotation = !actor.lockRotation;
+          }
+
+          return true;
+        };
+
+        const rotateControlData = {
+          sizeX: 24,
+          sizeY: 24,
+          x: 0.5,
+          y: -0.5,
+          offsetX: 16,
+          offsetY: 40,
+          cursorStyle: "pointer",
+          render: rotateControlRender,
+          mouseDownHandler: rotateControlAction,
+        };
+
+        actor.rotateControl = new fabric.Control(rotateControlData);
       }
     }
 

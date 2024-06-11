@@ -54,6 +54,7 @@ export default class LightSensor
       degrees: this.degrees,
       lockMovementX: this.lockMovementX,
       lockMovementY: this.lockMovementY,
+      lockRotation: this.lockRotation,
     };
   }
 

@@ -47,6 +47,7 @@ export default class Mirror
       degrees: this.degrees,
       lockMovementX: this.lockMovementX,
       lockMovementY: this.lockMovementY,
+      lockRotation: this.lockRotation,
     };
   }
 

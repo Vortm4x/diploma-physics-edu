@@ -43,7 +43,16 @@
       src="../assets/move-y-deny-control.png"
       style="display: none"
     />
-
+    <img
+      id="rotate-allow-control"
+      src="../assets/rotate-allow-control.png"
+      style="display: none"
+    />
+    <img
+      id="rotate-deny-control"
+      src="../assets/rotate-deny-control.png"
+      style="display: none"
+    />
     <v-btn class="mr-4" @click="saveScene">Save</v-btn>
     <v-btn class="mr-4" @click="addLaser">Add laser</v-btn>
     <v-btn class="mr-4" @click="addSensor">Add sensor</v-btn>

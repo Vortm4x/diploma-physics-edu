@@ -48,6 +48,7 @@ export default class LaserPointer extends Actor implements IRestorable {
       degrees: this.degrees,
       lockMovementX: this.lockMovementX,
       lockMovementY: this.lockMovementY,
+      lockRotation: this.lockRotation,
     };
   }
 

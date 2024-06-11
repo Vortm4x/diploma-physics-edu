@@ -32,6 +32,10 @@ export default class Actor extends SceneObject {
     this.fabricObject.controls["moveYControl"] = moveYControl;
   }
 
+  set rotateControl(rotateControl: fabric.Control) {
+    this.fabricObject.controls["rotateControl"] = rotateControl;
+  }
+
   get x(): number {
     if (this.fabricObject.left === undefined) {
       return NaN;
@@ -142,6 +146,11 @@ export default class Actor extends SceneObject {
   }
 
   set lockRotation(lockRotation: boolean) {
+    const controlsVisibility = {
+      mtr: !lockRotation,
+    };
+
+    this.fabricObject.setControlsVisibility(controlsVisibility);
     this.fabricObject.lockRotation = lockRotation;
   }
 

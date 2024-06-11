@@ -51,6 +51,7 @@ export default class OpaqueObstacle extends Obstacle implements IRestorable {
       degrees: this.degrees,
       lockMovementX: this.lockMovementX,
       lockMovementY: this.lockMovementY,
+      lockRotation: this.lockRotation,
     };
   }
 
