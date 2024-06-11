@@ -60,6 +60,7 @@ export default defineComponent({
     createScene() {
       scene = new Scene(1, 1);
     },
+    
     shareResult() {
       shareResult(this);
     },
