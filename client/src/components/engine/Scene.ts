@@ -429,6 +429,16 @@ export default class Scene implements IRestorable {
     return sceneScore;
   }
 
+  destroy(): void {
+    for (const sceneObj of this.objects) {
+      if (sceneObj instanceof Actor) {
+        const actor = sceneObj as Actor;
+
+        this.removeObject(actor);
+      }
+    }
+  }
+
   get export(): object {
     const entries: object[] = [];
 

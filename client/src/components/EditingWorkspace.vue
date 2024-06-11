@@ -186,6 +186,7 @@ export default defineComponent({
     }, 10);
   },
   unmounted() {
+    (scene as Scene).destroy();
     clearInterval(this.$data.updateInterval);
     clearInterval(this.$data.saveInterval);
   },
