@@ -20,8 +20,8 @@ export default class Actor extends SceneObject {
     super(fabricObject);
   }
 
-  set deleteControl(deleteControl: fabric.Control | null) {
-    this.fabricObject.controls["deleteControl"]. = undefined;
+  set deleteControl(deleteControl: fabric.Control) {
+    this.fabricObject.controls["deleteControl"] = deleteControl;
   }
 
   set moveXControl(moveXControl: fabric.Control) {

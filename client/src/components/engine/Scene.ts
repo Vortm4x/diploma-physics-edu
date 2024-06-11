@@ -70,7 +70,7 @@ export default class Scene implements IRestorable {
 
   addObject(object: SceneObject, hasControls: boolean): void {
     object.addToScene(this.canvas);
-    
+
     if (hasControls) {
       const controlRender = (
         ctx: CanvasRenderingContext2D,
@@ -93,7 +93,6 @@ export default class Scene implements IRestorable {
           ctx.restore();
         }
       };
-
 
       if (object instanceof Actor) {
         const actor = object as Actor;
@@ -288,10 +287,6 @@ export default class Scene implements IRestorable {
         actor.rotateControl = new fabric.Control(rotateControlData);
       }
     }
-    else
-    {
-      (object as Actor).resetControls();
-    }
 
     this.objects.push(object);
   }
@@ -440,8 +435,8 @@ export default class Scene implements IRestorable {
       if (sceneObj instanceof Actor) {
         const actor = sceneObj as Actor;
 
-        
         this.removeObject(actor);
+        actor.resetControls();
       }
     }
   }
