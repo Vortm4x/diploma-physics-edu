@@ -90,7 +90,7 @@ export default class Scene implements IRestorable {
             )
           );
           ctx.drawImage(img, -size / 2, -size / 2, size, size);
-          ctx.restore();  
+          ctx.restore();
         }
       };
 
