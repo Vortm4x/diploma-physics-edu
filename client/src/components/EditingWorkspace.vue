@@ -172,7 +172,7 @@ export default defineComponent({
       console.log(sceneData);
 
       if (sceneData !== undefined) {
-        scene = Scene.restore(JSON.parse(sceneData));
+        scene = Scene.restore(JSON.parse(sceneData), true);
       } else {
         scene = new Scene(800, 500);
       }
