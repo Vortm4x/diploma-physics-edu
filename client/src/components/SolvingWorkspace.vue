@@ -75,50 +75,53 @@ export default defineComponent({
       console.log(sceneData);
 
       if (sceneData !== undefined) {
-        scene = Scene.restore(JSON.parse(sceneData));
+        scene = Scene.restore(JSON.parse(sceneData), false);
       } else {
-        scene = Scene.restore({
-          width: 800,
-          height: 500,
-          entries: [
-            {
-              type: "LaserPointer",
-              x: 250,
-              y: 70,
-              degrees: 70,
-              lockMovementX: false,
-              lockMovementY: false,
-            },
-            {
-              type: "Mirror",
-              x: 400,
-              y: 85,
-              degrees: -15,
-              lockMovementX: false,
-              lockMovementY: false,
-            },
-            {
-              type: "TransparentObstacle",
-              x: 300,
-              y: 300,
-              degrees: 15,
-              lockMovementX: false,
-              lockMovementY: false,
-              width: 200,
-              height: 150,
-              color: "yellow",
-              refractionCoef: 1.5,
-            },
-            {
-              type: "LightSensor",
-              x: 250,
-              y: 450,
-              degrees: 15,
-              lockMovementX: false,
-              lockMovementY: false,
-            },
-          ],
-        });
+        scene = Scene.restore(
+          {
+            width: 800,
+            height: 500,
+            entries: [
+              {
+                type: "LaserPointer",
+                x: 250,
+                y: 70,
+                degrees: 70,
+                lockMovementX: false,
+                lockMovementY: false,
+              },
+              {
+                type: "Mirror",
+                x: 400,
+                y: 85,
+                degrees: -15,
+                lockMovementX: false,
+                lockMovementY: false,
+              },
+              {
+                type: "TransparentObstacle",
+                x: 300,
+                y: 300,
+                degrees: 15,
+                lockMovementX: false,
+                lockMovementY: false,
+                width: 200,
+                height: 150,
+                color: "yellow",
+                refractionCoef: 1.5,
+              },
+              {
+                type: "LightSensor",
+                x: 250,
+                y: 450,
+                degrees: 15,
+                lockMovementX: false,
+                lockMovementY: false,
+              },
+            ],
+          },
+          false
+        );
       }
 
       const updateCallback = () => {

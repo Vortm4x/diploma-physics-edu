@@ -68,10 +68,10 @@ export default class Scene implements IRestorable {
     return this.canvas.height;
   }
 
-  addObject(object: SceneObject, deletable?: boolean): void {
+  addObject(object: SceneObject, hasControls: boolean): void {
     object.addToScene(this.canvas);
 
-    if (deletable) {
+    if (hasControls) {
       const controlRender = (
         ctx: CanvasRenderingContext2D,
         left: number,
@@ -459,7 +459,7 @@ export default class Scene implements IRestorable {
     };
   }
 
-  static restore(data: object): Scene {
+  static restore(data: object, hasControls: boolean): Scene {
     const sceneProps = data as ISceneProps;
 
     const scene = new Scene(sceneProps.width, sceneProps.height);
@@ -488,7 +488,7 @@ export default class Scene implements IRestorable {
         actor.lockMovementY = actorProps.lockMovementY;
         actor.lockRotation = actorProps.lockRotation;
 
-        scene.addObject(actor);
+        scene.addObject(actor, hasControls);
       }
     }
 
