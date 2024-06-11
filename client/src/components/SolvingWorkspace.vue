@@ -18,10 +18,42 @@
       src="../assets/sensor-active.png"
       style="display: none"
     />
+    <img
+      id="delete-control"
+      src="../assets/delete-control.png"
+      style="display: none"
+    />
+    <img
+      id="move-x-allow-control"
+      src="../assets/move-x-allow-control.png"
+      style="display: none"
+    />
+    <img
+      id="move-x-deny-control"
+      src="../assets/move-x-deny-control.png"
+      style="display: none"
+    />
+    <img
+      id="move-y-allow-control"
+      src="../assets/move-y-allow-control.png"
+      style="display: none"
+    />
+    <img
+      id="move-y-deny-control"
+      src="../assets/move-y-deny-control.png"
+      style="display: none"
+    />
+    <img
+      id="rotate-allow-control"
+      src="../assets/rotate-allow-control.png"
+      style="display: none"
+    />
+    <img
+      id="rotate-deny-control"
+      src="../assets/rotate-deny-control.png"
+      style="display: none"
+    />
     <v-btn class="mr-4" @click="shareResult">Share result</v-btn>
-    <v-btn class="mr-4">Add laser</v-btn>
-    <v-btn class="mr-4">Add sensor</v-btn>
-    <v-btn class="mr-4">Add mirror</v-btn>
   </div>
 </template>
 
