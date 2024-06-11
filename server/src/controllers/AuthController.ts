@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { UserModel } from "../models"
+import { UserModel, UserGroupModel } from "../models"
 import jwt from "jsonwebtoken";
 import config from "../config/config"
 import bcrypt from "bcrypt-nodejs"
@@ -19,6 +19,7 @@ export default {
     async register(req: Request, res: Response): Promise<undefined> {
         try {
             const user = await UserModel.User.create(req.body);
+            await UserGroupModel.create({ email: req.body.email });
             res.send({
                 user: user.toJSON(),
                 jwtToken: jwtSignUser(user.toJSON()),
