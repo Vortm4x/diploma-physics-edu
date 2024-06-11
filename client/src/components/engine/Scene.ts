@@ -80,17 +80,18 @@ export default class Scene implements IRestorable {
         fabricObject: fabric.Object,
         img: HTMLImageElement
       ) => {
-        const size = 16;
-
-        ctx.save();
-        ctx.translate(left, top);
-        ctx.rotate(
-          fabric.util.degreesToRadians(
-            fabricObject.angle ? fabricObject.angle : 0
-          )
-        );
-        ctx.drawImage(img, -size / 2, -size / 2, size, size);
-        ctx.restore();
+        if (img !== null) {
+          const size = 16;
+          ctx.save();
+          ctx.translate(left, top);
+          ctx.rotate(
+            fabric.util.degreesToRadians(
+              fabricObject.angle ? fabricObject.angle : 0
+            )
+          );
+          ctx.drawImage(img, -size / 2, -size / 2, size, size);
+          ctx.restore();  
+        }
       };
 
       if (object instanceof Actor) {
@@ -476,8 +477,10 @@ export default class Scene implements IRestorable {
         actor = LightSensor.restore(objProps);
       } else if (actorProps.type === "OpaqueObstacle") {
         actor = OpaqueObstacle.restore(objProps);
+        actor.resizeControlsEnabled = true;
       } else if (actorProps.type === "TransparentObstacle") {
         actor = TransparentObstacle.restore(objProps);
+        actor.resizeControlsEnabled = true;
       }
 
       if (actor != null) {
