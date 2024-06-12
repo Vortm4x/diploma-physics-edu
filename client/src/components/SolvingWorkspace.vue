@@ -18,7 +18,7 @@
       src="../assets/sensor-active.png"
       style="display: none"
     />
-    <img
+    <!-- <img
       id="delete-control"
       src="../assets/delete-control.png"
       style="display: none"
@@ -52,13 +52,15 @@
       id="rotate-deny-control"
       src="../assets/rotate-deny-control.png"
       style="display: none"
-    />
-    <v-btn class="mr-4" @click="shareResult">Share result</v-btn>
+    /> -->
+    <v-btn class="mr-4" @click="shareResult"
+      >Share result: {{ sceneRef.score }}</v-btn
+    >
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref, reactive } from "vue";
 import Scene from "./engine/Scene";
 import ScenariosService from "@/services/ScenariosService";
 
@@ -85,6 +87,7 @@ export default defineComponent({
       },
       updateInterval: -1,
       saveInterval: -1,
+      sceneRef: { score: -1 },
     };
   },
 
@@ -93,6 +96,8 @@ export default defineComponent({
       scene = new Scene(1, 1);
     },
     shareResult() {
+      console.log(scene.score, this.sceneRef.score);
+
       shareResult(this);
     },
   },
@@ -121,7 +126,10 @@ export default defineComponent({
 
       const updateCallback = () => {
         scene.update();
+        this.$data.sceneRef.score = 0; // to trigger reactivity
       };
+
+      this.$data.sceneRef = reactive(scene);
 
       this.$data.updateInterval = setInterval(updateCallback, 1000 / 60);
     }, 10);

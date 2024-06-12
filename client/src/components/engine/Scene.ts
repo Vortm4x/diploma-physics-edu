@@ -430,6 +430,10 @@ export default class Scene implements IRestorable {
     return sceneScore;
   }
 
+  set score(v: number) {
+    v = 1;
+  }
+
   destroy(): void {
     for (const sceneObj of this.objects) {
       if (sceneObj instanceof Actor) {
